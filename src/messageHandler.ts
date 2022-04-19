@@ -128,7 +128,7 @@ export async function messageHandler(
         .resize({ width: 512, height: 512 })
         .webp({ quality: 5 })
         .toFile(`./media/${filename}.webp`);
-      if (statSync(`./media/${filename}.webp`).size > 1000000) {
+      if (statSync(`./media/${filename}.webp`).size > 1048576 ) {
         await sock.sendMessage(m.key.remoteJid, {
           sticker: { url: `./media/${filename}.webp` },
         });
