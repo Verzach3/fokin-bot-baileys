@@ -81,7 +81,7 @@ export async function messageHandler(
     await sock.sendMessage(m.key.remoteJid, reactionMessage);
   }
 
-  if (m.message.imageMessage?.caption === "!stickv2") {
+  if (m.message.imageMessage?.caption === "!stick") {
     if (messageType === "imageMessage") {
       // download stream
       const stream = await downloadContentFromMessage(
