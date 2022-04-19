@@ -105,7 +105,7 @@ export async function messageHandler(
     }
   }
 
-  if (m.message.videoMessage?.caption === "!stickv2") {
+  if (m.message.videoMessage?.caption === "!stick") {
     // sock.sendMessage(m.key.remoteJid, {sticker: {url: "./kirbi.webp"}});
     if (messageType === "videoMessage") {
       const filename = nanoid();
