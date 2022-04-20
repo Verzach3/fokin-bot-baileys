@@ -17,8 +17,8 @@ export async function messageHandler(
   if (!m.message) return;
   const messageType = Object.keys(m.message)[0];
 
-  if (m.message.conversation === "!comandos") {
-    sock.sendText(
+  if (m.message?.conversation === "!comandos") {
+    sock.sendMessage(
       m.key.remoteJid,
       "*COMANDOS*\n\n" + 
       "*!comandos* - Muestra este mensaje\n" +
