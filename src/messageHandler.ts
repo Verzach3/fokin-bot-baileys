@@ -17,6 +17,22 @@ export async function messageHandler(
   if (!m.message) return;
   const messageType = Object.keys(m.message)[0];
 
+  if (m.message.conversation === "!comandos") {
+    sock.sendText(
+      m.key.remoteJid,
+      "*COMANDOS*\n\n" + 
+      "*!comandos* - Muestra este mensaje\n" +
+      "*!stick* - Genera un sticker con la imagen enviada\n" +
+      "*!random [min] [max]* - Genera un numero aleatorio entre los dos numeros\n" +
+      "*!ban* - Banea a el usuario mencionado usuario\n" +
+      "_requiere permisos de administrador_\n" +
+      "*!dlaudio* link - Descarga el audio con el link*\n" +
+      "*!dlvideo* link - Descarga el video con el link*\n" +
+      "_solamente funciona con links de YouTube_\n" +
+      "\n\n*trabajo el progreso"
+    );
+  }
+
   if (m.message.imageMessage?.caption === "!stick") {
     if (messageType === "imageMessage") {
       // download stream
