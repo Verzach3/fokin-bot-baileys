@@ -6,6 +6,7 @@ import { statSync } from "fs";
 import { writeFile } from "fs/promises";
 import { nanoid } from "nanoid";
 import sharp from "sharp";
+import { randomNumber } from "./handlers/randomGenerator";
 import { convertMp4ToWebp } from "./lib/convertMp4ToWebp";
 
 export async function messageHandler(
@@ -15,71 +16,6 @@ export async function messageHandler(
   const m = messages[0];
   if (!m.message) return;
   const messageType = Object.keys(m.message)[0];
-
-  const buttons = [
-    { buttonId: "id1", buttonText: { displayText: "Button 1" }, type: 1 },
-    { buttonId: "id2", buttonText: { displayText: "Button 2" }, type: 1 },
-    { buttonId: "id3", buttonText: { displayText: "Button 3" }, type: 1 },
-  ];
-
-  const buttonMessage = {
-    text: "Hi it's button message",
-    footer: "Hello World",
-    buttons: buttons,
-    headerType: 1,
-  };
-
-  if (m.message.conversation === "!buttontest") {
-    sock.sendMessage(m.key.remoteJid, buttonMessage);
-  }
-
-  // send a list message!
-  const sections = [
-    {
-      title: "Section 1",
-      rows: [
-        { title: "Option 1", rowId: "option1" },
-        {
-          title: "Option 2",
-          rowId: "option2",
-          description: "This is a description",
-        },
-      ],
-    },
-    {
-      title: "Section 2",
-      rows: [
-        { title: "Option 3", rowId: "option3" },
-        {
-          title: "Option 4",
-          rowId: "option4",
-          description: "This is a description V2",
-        },
-      ],
-    },
-  ];
-
-  const listMessage = {
-    text: "This is a list",
-    footer: "nice footer, link: https://google.com",
-    title: "Amazing boldfaced list title",
-    buttonText: "Required, text on the button to view the list",
-    sections,
-  };
-
-  if (m.message.conversation === "!listtest") {
-    sock.sendMessage(m.key.remoteJid, listMessage);
-  }
-
-  const reactionMessage = {
-    react: {
-      text: "❤️",
-      key: m.key,
-    },
-  };
-  if (m.message.conversation === "!reactiontest") {
-    await sock.sendMessage(m.key.remoteJid, reactionMessage);
-  }
 
   if (m.message.imageMessage?.caption === "!stick") {
     if (messageType === "imageMessage") {
@@ -104,6 +40,8 @@ export async function messageHandler(
       });
     }
   }
+
+  randomNumber(m)
 
   if (m.message.videoMessage?.caption === "!stick") {
     // sock.sendMessage(m.key.remoteJid, {sticker: {url: "./kirbi.webp"}});
