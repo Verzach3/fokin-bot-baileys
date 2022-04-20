@@ -14,7 +14,9 @@ export async function dlVideo(link: string, senderId: string, sock: any) {
     const video: any = await youtube.getDetails(videoId);
     const videoLength = (await ytdl.getBasicInfo(link)).videoDetails.lengthSeconds;
     if (parseInt(videoLength) > 600) {
-      console.log("Video demasiado largo");
+      sock.sendMessage(senderId, {
+        text: `El video es demasiado largo...`,
+      })
       return null;
     } else {
       const stream = youtube.download(videoId, {
@@ -79,6 +81,9 @@ export async function dlAudio(link: string, senderId: string, sock: any) {
     const video: any = await youtube.getDetails(videoId);
     const videoLength = (await ytdl.getBasicInfo(link)).videoDetails.lengthSeconds;
     if (parseInt(videoLength) > 600) {
+      sock.sendMessage(senderId, {
+        text: `El video es demasiado largo...`,
+      })
       console.log("Video demasiado largo");
       return null;
     } else {
