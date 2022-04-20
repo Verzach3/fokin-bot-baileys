@@ -40,12 +40,12 @@ async function connectToWhatsapp() {
   // Update credentials
   sock.ev.on("creds.update", saveState);
 
-  sock.ev.on("messages.upsert", ({ messages }) => {
+  sock.ev.on("messages.upsert", async ({ messages }) => {
     console.log("New Messages", messages);
     messageHandler(messages, sock);
   });
 
-  sock.ev.on("chats.update", (chats) => {
+  sock.ev.on("chats.update", async (chats) => {
     console.log("New Chats", chats);
   });
 }
