@@ -63,6 +63,7 @@ export async function messageHandler(
   if (splitMessage![0] === "!dlvideo") {
     dlVideo(splitMessage![1], m.key?.remoteJid || "", sock);
   }
+  console.log(m.message.extendedTextMessage)
   if (m.message.videoMessage?.caption === "!stick") {
     // sock.sendMessage(m.key.remoteJid, {sticker: {url: "./kirbi.webp"}});
     if (messageType === "videoMessage") {
