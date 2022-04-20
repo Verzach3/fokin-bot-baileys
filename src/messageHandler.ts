@@ -65,7 +65,7 @@ export async function messageHandler(
     dlVideo(splitMessage![1], m.key?.remoteJid || "", sock);
   }
 
-  if (splitExtendedMessage![0] === "!dlaudio") {
+  if (splitExtendedMessage![0] === "!dlvideo") {
     dlVideo(splitExtendedMessage![1], m.key?.remoteJid || "", sock);
   }
 

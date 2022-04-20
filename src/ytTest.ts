@@ -31,14 +31,23 @@ export async function ytTest() {
     console.info('[DOWNLOADER]', `Downloading ${info.video_details.title} by ${info.video_details.metadata.channel_name}`);
   });
   
-  stream.on('progress', (info: { percentage: any; downloaded_size: any; size: any; }) => {
-    process.stdout.cursorTo(0);
-    process.stdout.write(`[DOWNLOADER] Downloaded ${info.percentage}% (${info.downloaded_size}MB) of ${info.size}MB`);
-  });
-  
-  stream.on('end', () => {
-    process.stdout.cursorTo(0);
-    console.info('[DOWNLOADER]', 'Done!');
+  stream.on(
+    "progress",
+    (info: { percentage: any; downloaded_size: any; size: any }) => {
+      try {
+        process.stdout.cursorTo(0);
+      } catch (error) {}
+      process.stdout.write(
+        `[DOWNLOADER] Downloaded ${info.percentage}% (${info.downloaded_size}MB) of ${info.size}MB`
+      );
+    }
+  );
+
+  stream.on("end", () => {
+    try {
+      process.stdout.cursorTo(0);
+    } catch (error) {}
+    console.info("[DOWNLOADER]", "Done!");
   });
   
   stream.on('error', (err: any) => console.error('[ERROR]', err)); 
