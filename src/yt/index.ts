@@ -12,7 +12,7 @@ export async function dlVideo(link: string, senderId: string, sock: any) {
     const filename = nanoid();
     const videoId = ytdl.getURLVideoID(link);
     const video: any = await youtube.getDetails(videoId);
-    if (video.length_seconds > 600) {
+    if (parseInt(video.length_seconds) > 600) {
       console.log("Video demasiado largo");
       return null;
     } else {
@@ -76,7 +76,7 @@ export async function dlAudio(link: string, senderId: string, sock: any) {
     const filename = nanoid();
     const videoId = ytdl.getURLVideoID(link);
     const video: any = await youtube.getDetails(videoId);
-    if (video.length_seconds > 600) {
+    if (parseInt(video.length_seconds) > 600) {
       console.log("Video demasiado largo");
       return null;
     } else {
