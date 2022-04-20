@@ -3,3 +3,4 @@ node_modules/
 *.webp
 *.mp4
 auth.json
+dist/

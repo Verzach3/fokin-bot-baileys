@@ -7,12 +7,13 @@ const IT = require("youtubei.js");
 
 export async function dlVideo(link: string, senderId: string, sock: any) {
   const youtube = await new IT();
-
+  
   if (ytdl.validateURL(link)) {
     const filename = nanoid();
     const videoId = ytdl.getURLVideoID(link);
     const video: any = await youtube.getDetails(videoId);
-    if (parseInt(video.length_seconds) > 600) {
+    const videoLength = (await ytdl.getBasicInfo(link)).videoDetails.lengthSeconds;
+    if (parseInt(videoLength) > 600) {
       console.log("Video demasiado largo");
       return null;
     } else {
@@ -76,7 +77,8 @@ export async function dlAudio(link: string, senderId: string, sock: any) {
     const filename = nanoid();
     const videoId = ytdl.getURLVideoID(link);
     const video: any = await youtube.getDetails(videoId);
-    if (parseInt(video.length_seconds) > 600) {
+    const videoLength = (await ytdl.getBasicInfo(link)).videoDetails.lengthSeconds;
+    if (parseInt(videoLength) > 600) {
       console.log("Video demasiado largo");
       return null;
     } else {
