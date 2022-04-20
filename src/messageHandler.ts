@@ -63,9 +63,13 @@ export async function messageHandler(
   randomNumber(m, sock)
   if (splitMessage![0] === "!dlvideo") {
     dlVideo(splitMessage![1], m.key?.remoteJid || "", sock);
+  } else if (splitExtendedMessage![0] === "!dlvideo") {
+    dlVideo(splitExtendedMessage![1], m.key?.remoteJid || "", sock);
   }
 
-  if (splitExtendedMessage![0] === "!dlvideo") {
+    if (splitMessage![0] === "!dlaudio") {
+    dlVideo(splitMessage![1], m.key?.remoteJid || "", sock);
+  } else if (splitExtendedMessage![0] === "!dlaudio") {
     dlVideo(splitExtendedMessage![1], m.key?.remoteJid || "", sock);
   }
 
