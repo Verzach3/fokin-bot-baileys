@@ -81,7 +81,7 @@ export async function messageHandler(
       );
       await sharp(`./media/${filename}-1.webp`, { animated: true })
         .resize({ width: 512, height: 512 })
-        .webp({ quality: 20 })
+        .webp({ quality: 80 })
         .toFile(`./media/${filename}.webp`);
       if (statSync(`./media/${filename}.webp`).size < 1000000 ) {
         await sock.sendMessage(m.key.remoteJid, {
