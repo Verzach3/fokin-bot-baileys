@@ -28,10 +28,9 @@ export async function messageHandler(
         "*!random [min] [max]* - Genera un numero aleatorio entre los dos numeros\n" +
         "*!ban* - Banea a el usuario mencionado usuario\n" +
         "_requiere permisos de administrador_\n" +
-        "*!dlaudio* link - Descarga el audio con el link*\n" +
-        "*!dlvideo* link - Descarga el video con el link*\n" +
-        "_solamente funciona con links de YouTube_\n" +
-        "\n\n*trabajo el progreso"
+        "*!dlaudio* link - Descarga el audio con el link\n" +
+        "*!dlvideo* link - Descarga el video con el link\n" +
+        "_solamente funciona con links de YouTube_\n"
       }
     );
   }
