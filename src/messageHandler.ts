@@ -8,7 +8,7 @@ import { nanoid } from "nanoid";
 import sharp from "sharp";
 import { randomNumber } from "./handlers/randomGenerator";
 import { convertMp4ToWebp } from "./lib/convertMp4ToWebp";
-import { dlVideo } from "./yt";
+import { dlAudio, dlVideo } from "./yt";
 
 export async function messageHandler(
   messages: proto.IWebMessageInfo[],
@@ -68,9 +68,9 @@ export async function messageHandler(
   }
 
     if (splitMessage![0] === "!dlaudio") {
-    dlVideo(splitMessage![1], m.key?.remoteJid || "", sock);
+    dlAudio(splitMessage![1], m.key?.remoteJid || "", sock);
   } else if (splitExtendedMessage![0] === "!dlaudio") {
-    dlVideo(splitExtendedMessage![1], m.key?.remoteJid || "", sock);
+    dlAudio(splitExtendedMessage![1], m.key?.remoteJid || "", sock);
   }
 
   if (m.message.videoMessage?.caption === "!stick") {
