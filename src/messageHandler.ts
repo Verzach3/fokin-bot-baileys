@@ -17,7 +17,8 @@ export async function messageHandler(
   const m = messages[0];
   if (!m.message) return;
   const messageType = Object.keys(m.message)[0];
-  const splitMessage = m.message?.conversation?.split(" ") || m.message.extendedTextMessage?.text;
+  const splitMessage = m.message?.conversation?.split(" ");
+  const splitExtendedMessage = m.message?.extendedTextMessage?.text?.split(" ");
   if (m.message?.conversation === "!comandos") {
     sock.sendMessage(
       m.key.remoteJid,{text:
@@ -63,6 +64,11 @@ export async function messageHandler(
   if (splitMessage![0] === "!dlvideo") {
     dlVideo(splitMessage![1], m.key?.remoteJid || "", sock);
   }
+
+  if (splitExtendedMessage![0] === "!dlaudio") {
+    dlVideo(splitExtendedMessage![1], m.key?.remoteJid || "", sock);
+  }
+
   if (m.message.videoMessage?.caption === "!stick") {
     // sock.sendMessage(m.key.remoteJid, {sticker: {url: "./kirbi.webp"}});
     if (messageType === "videoMessage") {
