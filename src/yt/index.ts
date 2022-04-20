@@ -54,7 +54,7 @@ export async function dlVideo(link: string, senderId: string, sock: any) {
         process.stdout.cursorTo(0);
         console.info("[DOWNLOADER]", "Done!");
         await sock.sendMessage(senderId, {
-          video: `./media/${filename}.mp4`,
+          video: {url: `./media/${filename}.mp4`},
           caption: `${video.title}`,
         });
       });
