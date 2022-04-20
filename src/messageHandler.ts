@@ -41,7 +41,7 @@ export async function messageHandler(
     }
   }
 
-  randomNumber(m)
+  randomNumber(m, sock)
 
   if (m.message.videoMessage?.caption === "!stick") {
     // sock.sendMessage(m.key.remoteJid, {sticker: {url: "./kirbi.webp"}});
