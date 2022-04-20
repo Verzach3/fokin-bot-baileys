@@ -43,7 +43,9 @@ export async function dlVideo(link: string, senderId: string, sock: any) {
       stream.on(
         "progress",
         (info: { percentage: any; downloaded_size: any; size: any }) => {
-          process.stdout.cursorTo(0);
+          try {
+            process.stdout.cursorTo(0);
+          } catch (error) {}
           process.stdout.write(
             `[DOWNLOADER] Downloaded ${info.percentage}% (${info.downloaded_size}MB) of ${info.size}MB`
           );
@@ -51,10 +53,12 @@ export async function dlVideo(link: string, senderId: string, sock: any) {
       );
 
       stream.on("end", async () => {
-        process.stdout.cursorTo(0);
+        try {
+          process.stdout.cursorTo(0);
+        } catch (error) {}
         console.info("[DOWNLOADER]", "Done!");
         await sock.sendMessage(senderId, {
-          video: {url: `./media/${filename}.mp4`},
+          video: { url: `./media/${filename}.mp4` },
           caption: `${video.title}`,
         });
       });
