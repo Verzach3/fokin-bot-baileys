@@ -8,6 +8,7 @@ import { nanoid } from "nanoid";
 import sharp from "sharp";
 import { randomNumber } from "./handlers/randomGenerator";
 import { convertMp4ToWebp } from "./lib/convertMp4ToWebp";
+import { dlVideo } from "./yt";
 
 export async function messageHandler(
   messages: proto.IWebMessageInfo[],
@@ -16,7 +17,7 @@ export async function messageHandler(
   const m = messages[0];
   if (!m.message) return;
   const messageType = Object.keys(m.message)[0];
-
+  const splitMessage = m.message?.conversation?.split(" ");
   if (m.message?.conversation === "!comandos") {
     sock.sendMessage(
       m.key.remoteJid,{text:
@@ -59,7 +60,9 @@ export async function messageHandler(
   }
 
   randomNumber(m, sock)
-
+  if (splitMessage![0] === "!dlvideo") {
+    dlVideo(splitMessage![1], m.key?.remoteJid || "", sock);
+  }
   if (m.message.videoMessage?.caption === "!stick") {
     // sock.sendMessage(m.key.remoteJid, {sticker: {url: "./kirbi.webp"}});
     if (messageType === "videoMessage") {

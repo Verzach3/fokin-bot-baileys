@@ -45,7 +45,7 @@ function connectToWhatsapp() {
         });
         sock.ev.on("connection.update", (update) => {
             var _a, _b;
-            const { connection, lastDisconnect } = update;
+            const { connection, lastDisconnect, qr } = update;
             if (connection === "close") {
                 const shouldReconnect = ((_b = (_a = lastDisconnect.error) === null || _a === void 0 ? void 0 : _a.output) === null || _b === void 0 ? void 0 : _b.statusCode) !==
                     baileys_1.DisconnectReason.loggedOut;
@@ -59,13 +59,13 @@ function connectToWhatsapp() {
             }
         });
         sock.ev.on("creds.update", saveState);
-        sock.ev.on("messages.upsert", ({ messages }) => {
+        sock.ev.on("messages.upsert", ({ messages }) => __awaiter(this, void 0, void 0, function* () {
             console.log("New Messages", messages);
             (0, messageHandler_1.messageHandler)(messages, sock);
-        });
-        sock.ev.on("chats.update", (chats) => {
+        }));
+        sock.ev.on("chats.update", (chats) => __awaiter(this, void 0, void 0, function* () {
             console.log("New Chats", chats);
-        });
+        }));
     });
 }
 connectToWhatsapp();

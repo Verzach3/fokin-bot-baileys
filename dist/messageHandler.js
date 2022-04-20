@@ -25,73 +25,30 @@ const fs_1 = require("fs");
 const promises_1 = require("fs/promises");
 const nanoid_1 = require("nanoid");
 const sharp_1 = __importDefault(require("sharp"));
+const randomGenerator_1 = require("./handlers/randomGenerator");
 const convertMp4ToWebp_1 = require("./lib/convertMp4ToWebp");
 function messageHandler(messages, sock) {
     var e_1, _a, e_2, _b;
-    var _c, _d;
+    var _c, _d, _e;
     return __awaiter(this, void 0, void 0, function* () {
         const m = messages[0];
         if (!m.message)
             return;
         const messageType = Object.keys(m.message)[0];
-        const buttons = [
-            { buttonId: "id1", buttonText: { displayText: "Button 1" }, type: 1 },
-            { buttonId: "id2", buttonText: { displayText: "Button 2" }, type: 1 },
-            { buttonId: "id3", buttonText: { displayText: "Button 3" }, type: 1 },
-        ];
-        const buttonMessage = {
-            text: "Hi it's button message",
-            footer: "Hello World",
-            buttons: buttons,
-            headerType: 1,
-        };
-        if (m.message.conversation === "!buttontest") {
-            sock.sendMessage(m.key.remoteJid, buttonMessage);
+        if (((_c = m.message) === null || _c === void 0 ? void 0 : _c.conversation) === "!comandos") {
+            sock.sendMessage(m.key.remoteJid, { text: "*COMANDOS*\n\n" +
+                    "*!comandos* - Muestra este mensaje\n" +
+                    "*!stick* - Genera un sticker con la imagen enviada\n" +
+                    "*!random [min] [max]* - Genera un numero aleatorio entre los dos numeros\n" +
+                    "*!ban* - Banea a el usuario mencionado usuario\n" +
+                    "_requiere permisos de administrador_\n" +
+                    "*!dlaudio* link - Descarga el audio con el link*\n" +
+                    "*!dlvideo* link - Descarga el video con el link*\n" +
+                    "_solamente funciona con links de YouTube_\n" +
+                    "\n\n*trabajo el progreso"
+            });
         }
-        const sections = [
-            {
-                title: "Section 1",
-                rows: [
-                    { title: "Option 1", rowId: "option1" },
-                    {
-                        title: "Option 2",
-                        rowId: "option2",
-                        description: "This is a description",
-                    },
-                ],
-            },
-            {
-                title: "Section 2",
-                rows: [
-                    { title: "Option 3", rowId: "option3" },
-                    {
-                        title: "Option 4",
-                        rowId: "option4",
-                        description: "This is a description V2",
-                    },
-                ],
-            },
-        ];
-        const listMessage = {
-            text: "This is a list",
-            footer: "nice footer, link: https://google.com",
-            title: "Amazing boldfaced list title",
-            buttonText: "Required, text on the button to view the list",
-            sections,
-        };
-        if (m.message.conversation === "!listtest") {
-            sock.sendMessage(m.key.remoteJid, listMessage);
-        }
-        const reactionMessage = {
-            react: {
-                text: "❤️",
-                key: m.key,
-            },
-        };
-        if (m.message.conversation === "!reactiontest") {
-            yield sock.sendMessage(m.key.remoteJid, reactionMessage);
-        }
-        if (((_c = m.message.imageMessage) === null || _c === void 0 ? void 0 : _c.caption) === "!stickv2") {
+        if (((_d = m.message.imageMessage) === null || _d === void 0 ? void 0 : _d.caption) === "!stick") {
             if (messageType === "imageMessage") {
                 const stream = yield (0, baileys_1.downloadContentFromMessage)(m.message.imageMessage, "image");
                 const filename = (0, nanoid_1.nanoid)();
@@ -119,7 +76,8 @@ function messageHandler(messages, sock) {
                 });
             }
         }
-        if (((_d = m.message.videoMessage) === null || _d === void 0 ? void 0 : _d.caption) === "!stickv2") {
+        (0, randomGenerator_1.randomNumber)(m, sock);
+        if (((_e = m.message.videoMessage) === null || _e === void 0 ? void 0 : _e.caption) === "!stick") {
             if (messageType === "videoMessage") {
                 const filename = (0, nanoid_1.nanoid)();
                 const stream = yield (0, baileys_1.downloadContentFromMessage)(m.message.videoMessage, "video");
@@ -141,9 +99,9 @@ function messageHandler(messages, sock) {
                 yield (0, convertMp4ToWebp_1.convertMp4ToWebp)(`./media/${filename}.mp4`, `./media/${filename}-1.webp`);
                 yield (0, sharp_1.default)(`./media/${filename}-1.webp`, { animated: true })
                     .resize({ width: 512, height: 512 })
-                    .webp({ quality: 5 })
+                    .webp({ quality: 80 })
                     .toFile(`./media/${filename}.webp`);
-                if ((0, fs_1.statSync)(`./media/${filename}.webp`).size > 1000000) {
+                if ((0, fs_1.statSync)(`./media/${filename}.webp`).size < 1000000) {
                     yield sock.sendMessage(m.key.remoteJid, {
                         sticker: { url: `./media/${filename}.webp` },
                     });

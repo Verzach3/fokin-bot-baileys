@@ -4,6 +4,7 @@ import makeWASocket, {
 } from "@adiwajshing/baileys";
 import { Boom } from "@hapi/boom";
 import { mkdir } from "fs";
+import { stdout } from "process";
 import { messageHandler } from "./messageHandler";
 
 const { state, saveState } = useSingleFileAuthState("./auth.json");
@@ -18,7 +19,7 @@ async function connectToWhatsapp() {
 
   // Make connection
   sock.ev.on("connection.update", (update) => {
-    const { connection, lastDisconnect } = update;
+    const { connection, lastDisconnect, qr } = update;
     if (connection === "close") {
       const shouldReconnect =
         (lastDisconnect!.error as Boom)?.output?.statusCode !==
@@ -49,5 +50,4 @@ async function connectToWhatsapp() {
     console.log("New Chats", chats);
   });
 }
-
 connectToWhatsapp();

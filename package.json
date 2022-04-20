@@ -27,6 +27,7 @@
     "nanoid": "^3.3.3",
     "qrcode-terminal": "^0.12.0",
     "sharp": "^0.30.4",
-    "youtubei.js": "^1.4.1-dev.1"
+    "youtubei.js": "^1.4.1-dev.1",
+    "ytdl-core": "^4.11.0"
   }
 }
