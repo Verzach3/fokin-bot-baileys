@@ -121,6 +121,7 @@ export async function dlAudio(link: string, senderId: string, sock: any) {
           process.stdout.cursorTo(0);
         } catch (error) {}
         console.info("[DOWNLOADER]", "Done!");
+        console.log(video);
         await sock.sendMessage(senderId, {
           audio: { url: `./media/${filename}.mp3` }, mimetype: 'audio/mp4',
         });
@@ -128,7 +129,6 @@ export async function dlAudio(link: string, senderId: string, sock: any) {
 
       stream.on("error", (err: any) => console.error("[ERROR]", err));
     }
-    console.log(video);
   }
 }
 
