@@ -93,12 +93,12 @@ export async function mainHandler(
     console.log(groupMetadata.participants);
     console.log(member);
     if (
-      (m.message.extendedTextMessage?.contextInfo?.mentionedJid || nanoid()) !==
+      (m.message.extendedTextMessage?.contextInfo?.mentionedJid || m.message.extendedTextMessage?.contextInfo?.participant ||nanoid()) !==
       senderId &&
       member!
     ) {
       
-      sock.groupParticipantsUpdate(messages[0].key.remoteJid, [... m.message.extendedTextMessage!.contextInfo!.mentionedJid!], "remove")
+      sock.groupParticipantsUpdate(messages[0].key.remoteJid, [... m.message.extendedTextMessage!.contextInfo!.mentionedJid! || m.message.extendedTextMessage!.contextInfo!.participant], "remove")
       sendTextMessage(chatId!, "🚫");
     }
   }
