@@ -94,6 +94,7 @@ async function connectToWhatsapp() {
   sock.ev.on("messages.upsert", async ({ messages }) => {
     console.log("[USERID]", sock.user.id);
     console.log(messages[0].key)
+    console.log(sock.groupMetadata(messages[0].key.remoteJid || ""));
     console.log(
       "New Messages",
       messages[0].message?.extendedTextMessage?.contextInfo?.mentionedJid
