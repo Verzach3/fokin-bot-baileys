@@ -17,8 +17,8 @@ export async function messageHandler(
   const m = messages[0];
   if (!m.message) return;
   const messageType = Object.keys(m.message)[0];
-  const splitMessage = m.message?.conversation?.split(" ");
-  const splitExtendedMessage = m.message?.extendedTextMessage?.text?.split(" ");
+  const splitMessage = m.message?.conversation?.split(" ") || "";
+  const splitExtendedMessage = m.message?.extendedTextMessage?.text?.split(" ") || "";
   if (m.message?.conversation === "!comandos") {
     sock.sendMessage(
       m.key.remoteJid,{text:

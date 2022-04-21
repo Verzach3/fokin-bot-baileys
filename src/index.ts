@@ -4,7 +4,6 @@ import makeWASocket, {
 } from "@adiwajshing/baileys";
 import { Boom } from "@hapi/boom";
 import { mkdir } from "fs";
-import { stdout } from "process";
 import { messageHandler } from "./messageHandler";
 
 const { state, saveState } = useSingleFileAuthState("./auth.json");
