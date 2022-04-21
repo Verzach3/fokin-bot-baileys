@@ -90,11 +90,11 @@ export async function mainHandler(
         member.id === senderId &&
         (member.admin === "admin" || member.admin === "superadmin")
     );
-    console.log(groupMetadata.participants[0].isAdmin);
-    console.log(groupMetadata.participants[0].isSuperAdmin);
+    console.log(groupMetadata.participants);
+    console.log(member);
     if (
       (m.message.extendedTextMessage?.contextInfo?.mentionedJid || nanoid()) !==
-        senderId &&
+      senderId &&
       member!
     ) {
       sendTextMessage(sender!, "🚫");
