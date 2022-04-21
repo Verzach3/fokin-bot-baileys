@@ -84,10 +84,8 @@ export async function mainHandler(
 
   if (splitExtendedMessage[0] === "!ban") {
     const groupMetadata: GroupMetadata = await sock.groupMetadata(groupId);
-    const member = groupMetadata.participants.find(
-      (member) =>
-        (member.id === senderId && member.isAdmin) || member.isSuperAdmin
-    );
+    const member = undefined
+    console.log(groupMetadata.participants)
     if (
       (m.message.extendedTextMessage?.contextInfo?.mentionedJid || nanoid()) !==
         senderId &&
