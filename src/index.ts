@@ -102,5 +102,9 @@ async function connectToWhatsapp() {
   sock.ev.on("chats.update", async (chats) => {
     console.log("New Chats", chats);
   });
+
+  sock.ev.on("group-participants.update", (participants) => {
+    console.log("New Group Participants", participants);
+  });
 }
 connectToWhatsapp();
