@@ -28,7 +28,7 @@ async function connectToWhatsapp() {
     caption?: string
   ) => {
     sock.sendMessage(contactId, {
-      video: { url: videoPath },
+      video: {url: videoPath},
       caption: caption,
     });
   };

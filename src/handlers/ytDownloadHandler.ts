@@ -11,10 +11,17 @@ export function ytDownloadHandler(
     videoPath: string,
     caption?: string | undefined
   ) => void,
-  sendAudioMessage: (contactId: string, audioPath: string) => void,
+  sendAudioMessage: (contactId: string, audioPath: string) => void
 ) {
   if (splitMessage![0] === "!dlvideo") {
-    dlVideo(splitMessage![1], sender || "", sendTextMessage, sendVideoMessage, sendAudioMessage);
+    dlVideo(
+      splitMessage![1],
+      sender || "",
+      sendTextMessage,
+      sendVideoMessage,
+      sendAudioMessage
+    );
+    return;
   } else if (splitExtendedMessage![0] === "!dlvideo") {
     dlVideo(
       splitExtendedMessage![1],
@@ -23,10 +30,16 @@ export function ytDownloadHandler(
       sendVideoMessage,
       sendAudioMessage
     );
-  }
-
-  if (splitMessage![0] === "!dlaudio") {
-    dlAudio(splitMessage![1], sender || "", sendTextMessage, sendVideoMessage, sendAudioMessage);
+    return;
+  } else if (splitMessage![0] === "!dlaudio") {
+    dlAudio(
+      splitMessage![1],
+      sender || "",
+      sendTextMessage,
+      sendVideoMessage,
+      sendAudioMessage
+    );
+    return;
   } else if (splitExtendedMessage![0] === "!dlaudio") {
     dlAudio(
       splitExtendedMessage![1],
@@ -35,5 +48,6 @@ export function ytDownloadHandler(
       sendVideoMessage,
       sendAudioMessage
     );
+    return;
   }
 }
