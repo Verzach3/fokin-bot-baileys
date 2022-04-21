@@ -137,9 +137,9 @@ export async function dlAudio(
             process.stdout.cursorTo(0);
           } catch (error) {}
           if (info.percentage % 10 === 0) {
-            process.stdout.write(
-              `[DOWNLOADER] Downloaded ${info.percentage}% (${info.downloaded_size}MB) of ${info.size}MB`
-            );
+            // process.stdout.write(
+            //   `[DOWNLOADER] Downloaded ${info.percentage}% (${info.downloaded_size}MB) of ${info.size}MB`
+            // );
           }
         }
       );
