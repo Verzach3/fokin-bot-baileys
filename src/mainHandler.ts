@@ -1,10 +1,9 @@
-import makeWASocket, {
-  proto,
-} from "@adiwajshing/baileys";
+import makeWASocket, { GroupMetadata, proto } from "@adiwajshing/baileys";
 import { randomNumber as randomNumberHandler } from "./handlers/randomGeneratorHandler";
 import { imageStickerGenerator } from "./lib/imageStickerGenerator";
 import { ytDownloadHandler } from "./handlers/ytDownloadHandler";
 import { stickerHandler } from "./handlers/stickerHandler";
+import { nanoid } from "nanoid";
 
 export async function mainHandler(
   messages: proto.IWebMessageInfo[],
@@ -33,6 +32,8 @@ export async function mainHandler(
   const m = messages[0];
   if (!m.message) return;
   const sender = m.key.remoteJid;
+  const groupId = m.key.remoteJid?.split("-")[1] || "";
+  const senderId = `${m.key.remoteJid?.split("-")[0]}@s.whatsapp.net` || "";
   const messageType = Object.keys(m.message)[0];
   const splitMessage = m.message?.conversation?.split(" ") || "";
   const splitExtendedMessage =
@@ -65,18 +66,34 @@ export async function mainHandler(
   }
 
   randomNumberHandler(m, sock);
-  ytDownloadHandler(splitMessage, sender, sock, splitExtendedMessage, sendTextMessage, sendVideoMessage);
-  await stickerHandler(m, messageType, sendStickerMessage, sender, sendTextMessage);
+  ytDownloadHandler(
+    splitMessage,
+    sender,
+    sock,
+    splitExtendedMessage,
+    sendTextMessage,
+    sendVideoMessage
+  );
+  await stickerHandler(
+    m,
+    messageType,
+    sendStickerMessage,
+    sender,
+    sendTextMessage
+  );
 
   if (splitExtendedMessage[0] === "!ban") {
+    const groupMetadata: GroupMetadata = await sock.groupMetadata(groupId);
+    const member = groupMetadata.participants.find(
+      (member) =>
+        (member.id === senderId && member.isAdmin) || member.isSuperAdmin
+    );
     if (
-      m.message.extendedTextMessage?.contextInfo?.mentionedJid !== sender &&
-      m.message.extendedTextMessage?.contextInfo?.mentionedJid !== sock.user.id 
-
-    )
-    sendTextMessage(sender!, "🚫");
+      (m.message.extendedTextMessage?.contextInfo?.mentionedJid || nanoid()) !==
+        senderId &&
+      member!
+    ) {
+      sendTextMessage(sender!, "🚫");
+    }
   }
 }
-
-
-
