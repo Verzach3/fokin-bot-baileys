@@ -97,6 +97,8 @@ export async function mainHandler(
       senderId &&
       member!
     ) {
+      
+      sock.groupParticipantsUpdate(messages[0].key.remoteJid, [... m.message.extendedTextMessage!.contextInfo!.mentionedJid!], "remove")
       sendTextMessage(chatId!, "🚫");
     }
   }
