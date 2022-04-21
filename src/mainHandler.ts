@@ -33,7 +33,7 @@ export async function mainHandler(
   if (!m.message) return;
   const sender = m.key.remoteJid;
   const groupId = m.key.remoteJid?.split("-")[1] || "";
-  console.log(groupId)
+  console.log(groupId);
   const senderId = `${m.key.remoteJid?.split("-")[0]}@s.whatsapp.net` || "";
   const messageType = Object.keys(m.message)[0];
   const splitMessage = m.message?.conversation?.split(" ") || "";
@@ -84,9 +84,13 @@ export async function mainHandler(
   );
 
   if (splitExtendedMessage[0] === "!ban") {
-    const groupMetadata: GroupMetadata = await sock.groupMetadata(groupId);
-    const member = undefined
-    console.log(groupMetadata.participants)
+    const groupMetadata: GroupMetadata = await sock.groupMetadata(sender);
+    const member = groupMetadata.participants.find(
+      (member) =>
+        member.id === senderId &&
+        (member.admin === "admin" || member.admin === "superadmin")
+    );
+    console.log(groupMetadata.participants);
     if (
       (m.message.extendedTextMessage?.contextInfo?.mentionedJid || nanoid()) !==
         senderId &&
