@@ -31,6 +31,7 @@ export async function mainHandler(
 ) {
   const m = messages[0];
   if (!m.message) return;
+  console.log(m)
   const chatId = m.key.remoteJid;
   const groupId = m.key.remoteJid?.split("-")[1] || "";
   console.log(groupId);
