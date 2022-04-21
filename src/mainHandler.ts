@@ -73,7 +73,8 @@ export async function mainHandler(
     sock,
     splitExtendedMessage,
     sendTextMessage,
-    sendVideoMessage
+    sendVideoMessage,
+    sendAudioMessage
   );
   await stickerHandler(
     m,

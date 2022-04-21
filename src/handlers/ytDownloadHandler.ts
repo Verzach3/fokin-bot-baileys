@@ -10,7 +10,8 @@ export function ytDownloadHandler(
     contactId: string,
     videoPath: string,
     caption?: string | undefined
-  ) => void
+  ) => void,
+  sendAudioMessage: (contactId: string, audioPath: string) => void,
 ) {
   if (splitMessage![0] === "!dlvideo") {
     dlVideo(splitMessage![1], sender || "", sendTextMessage, sendVideoMessage);
