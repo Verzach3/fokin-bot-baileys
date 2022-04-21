@@ -66,8 +66,16 @@ export async function mainHandler(
 
   randomNumberHandler(m, sock);
   ytDownloadHandler(splitMessage, sender, sock, splitExtendedMessage, sendTextMessage, sendVideoMessage);
-
   await stickerHandler(m, messageType, sendStickerMessage, sender, sendTextMessage);
+
+  if (splitExtendedMessage[0] === "!ban") {
+    if (
+      m.message.extendedTextMessage?.contextInfo?.mentionedJid !== sender &&
+      m.message.extendedTextMessage?.contextInfo?.mentionedJid !== sock.user.id 
+
+    )
+    sendTextMessage(sender!, "🚫");
+  }
 }
 
 

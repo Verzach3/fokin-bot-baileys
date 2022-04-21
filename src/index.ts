@@ -52,7 +52,13 @@ async function connectToWhatsapp() {
     sock.sendMessage(contactId, { sticker: { url: stickerPath } });
   };
 
-  const sendButtonMessage = async (contactId: string, buttons: proto.IButton[], caption: string, footer: string, imagePath: string) => {
+  const sendButtonMessage = async (
+    contactId: string,
+    buttons: proto.IButton[],
+    caption: string,
+    footer: string,
+    imagePath: string
+  ) => {
     sock.sendMessage(contactId, {
       image: { url: imagePath },
       caption: caption,
@@ -86,7 +92,12 @@ async function connectToWhatsapp() {
   sock.ev.on("creds.update", saveState);
 
   sock.ev.on("messages.upsert", async ({ messages }) => {
-    console.log("New Messages", messages[0].message?.extendedTextMessage);
+    console.log("[USERID]", sock.user.id);
+    console.log(messages[0].key)
+    console.log(
+      "New Messages",
+      messages[0].message?.extendedTextMessage?.contextInfo?.mentionedJid
+    );
     mainHandler(
       messages,
       sock,
@@ -104,7 +115,7 @@ async function connectToWhatsapp() {
   });
 
   sock.ev.on("group-participants.update", (participants) => {
-    if(participants.action === "add") {
+    if (participants.action === "add") {
       sock.groupMetadata(participants.id).then(console.log);
     }
     console.log("New Group Participants", participants);
