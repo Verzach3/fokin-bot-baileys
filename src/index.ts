@@ -104,6 +104,9 @@ async function connectToWhatsapp() {
   });
 
   sock.ev.on("group-participants.update", (participants) => {
+    if(participants.action === "add") {
+      sock.groupMetadata(participants.id).then(console.log);
+    }
     console.log("New Group Participants", participants);
   });
 }
