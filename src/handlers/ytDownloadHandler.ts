@@ -14,24 +14,26 @@ export function ytDownloadHandler(
   sendAudioMessage: (contactId: string, audioPath: string) => void,
 ) {
   if (splitMessage![0] === "!dlvideo") {
-    dlVideo(splitMessage![1], sender || "", sendTextMessage, sendVideoMessage);
+    dlVideo(splitMessage![1], sender || "", sendTextMessage, sendVideoMessage, sendAudioMessage);
   } else if (splitExtendedMessage![0] === "!dlvideo") {
     dlVideo(
       splitExtendedMessage![1],
       sender || "",
       sendTextMessage,
-      sendVideoMessage
+      sendVideoMessage,
+      sendAudioMessage
     );
   }
 
   if (splitMessage![0] === "!dlaudio") {
-    dlAudio(splitMessage![1], sender || "", sendTextMessage, sendVideoMessage);
+    dlAudio(splitMessage![1], sender || "", sendTextMessage, sendVideoMessage, sendAudioMessage);
   } else if (splitExtendedMessage![0] === "!dlaudio") {
     dlAudio(
       splitExtendedMessage![1],
       sender || "",
       sendTextMessage,
-      sendVideoMessage
+      sendVideoMessage,
+      sendAudioMessage
     );
   }
 }
