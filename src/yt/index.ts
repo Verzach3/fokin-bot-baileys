@@ -5,7 +5,7 @@ import ytdl from "ytdl-core";
 
 const IT = require("youtubei.js");
 
-export async function dlVideo(link: string, senderId: string, sock: any) {
+export async function dlVideo(link: string, senderId: string, sendTextMessage: (contactId: string, message: string) => void, sendVideoMessage: { (contactId: string, videoPath: string, caption?: string | undefined): void; (contactId: string, videoPath: string, caption?: string | undefined): void; }) {
   const youtube = await new IT();
   
   if (ytdl.validateURL(link)) {
@@ -14,9 +14,7 @@ export async function dlVideo(link: string, senderId: string, sock: any) {
     const video: any = await youtube.getDetails(videoId);
     const videoLength = (await ytdl.getBasicInfo(link)).videoDetails.lengthSeconds;
     if (parseInt(videoLength) > 600) {
-      sock.sendMessage(senderId, {
-        text: `El video es demasiado largo...`,
-      })
+      sendTextMessage(senderId, "Video demasiado largo, limite 10min");
       return null;
     } else {
       const stream = youtube.download(videoId, {
@@ -60,19 +58,16 @@ export async function dlVideo(link: string, senderId: string, sock: any) {
           process.stdout.cursorTo(0);
         } catch (error) {}
         console.info("[DOWNLOADER]", "Done!");
-        await sock.sendMessage(senderId, {
-          video: { url: `./media/${filename}.mp4` },
-          caption: `${video.title}`,
-        });
+        sendVideoMessage(senderId, `./media/${filename}.mp4`, video.title);
       });
 
-      stream.on("error", (err: any) => console.error("[ERROR]", err));
+      stream.on("error", (err: any) => {console.error("[ERROR]", err); });
     }
     console.log(video);
   }
 }
 
-export async function dlAudio(link: string, senderId: string, sock: any) {
+export async function dlAudio(link: string, senderId: string, sendTextMessage: (contactId: string, message: string) => void, sendAudioMessage: { (contactId: string, audioPath: string, caption?: string | undefined): void; (contactId: string, audioPath: string, caption?: string | undefined): void; }) {
   const youtube = await new IT();
 
   if (ytdl.validateURL(link)) {
@@ -81,9 +76,7 @@ export async function dlAudio(link: string, senderId: string, sock: any) {
     const video: any = await youtube.getDetails(videoId);
     const videoLength = (await ytdl.getBasicInfo(link)).videoDetails.lengthSeconds;
     if (parseInt(videoLength) > 600) {
-      sock.sendMessage(senderId, {
-        text: `El video es demasiado largo...`,
-      })
+      sendTextMessage(senderId, "Video demasiado largo, limite 10min");
       console.log("Video demasiado largo");
       return null;
     } else {
@@ -129,9 +122,7 @@ export async function dlAudio(link: string, senderId: string, sock: any) {
         } catch (error) {}
         console.info("[DOWNLOADER]", "Done!");
         console.log(video);
-        await sock.sendMessage(senderId, {
-          audio: { url: `./media/${filename}.mp3` }, mimetype: 'audio/mp4',
-        });
+        sendAudioMessage(senderId, `./media/${filename}.mp3`, video.title);
       });
 
       stream.on("error", (err: any) => console.error("[ERROR]", err));

@@ -1,10 +1,12 @@
 import makeWASocket, {
   DisconnectReason,
+  proto,
   useSingleFileAuthState,
 } from "@adiwajshing/baileys";
 import { Boom } from "@hapi/boom";
 import { mkdir } from "fs";
-import { messageHandler } from "./messageHandler";
+import { button } from "./interfaces/button";
+import { mainHandler } from "./mainHandler";
 
 const { state, saveState } = useSingleFileAuthState("./auth.json");
 
@@ -15,6 +17,49 @@ async function connectToWhatsapp() {
     auth: state,
     printQRInTerminal: true,
   });
+
+  const sendTextMessage = async (contactId: string, message: string) => {
+    sock.sendMessage(contactId, { text: message });
+  };
+
+  const sendVideoMessage = async (
+    contactId: string,
+    videoPath: string,
+    caption?: string
+  ) => {
+    sock.sendMessage(contactId, {
+      video: { url: videoPath },
+      caption: caption,
+    });
+  };
+
+  const sendAudioMessage = async (contactId: string, audioPath: string) => {
+    sock.sendMessage(contactId, { audio: { url: audioPath } });
+  };
+
+  const sendImageMessage = async (
+    contactId: string,
+    imagePath: string,
+    caption?: string
+  ) => {
+    sock.sendMessage(contactId, {
+      image: { url: imagePath },
+      caption: caption,
+    });
+  };
+
+  const sendStickerMessage = async (contactId: string, stickerPath: string) => {
+    sock.sendMessage(contactId, { sticker: { url: stickerPath } });
+  };
+
+  const sendButtonMessage = async (contactId: string, buttons: proto.IButton[], caption: string, footer: string, imagePath: string) => {
+    sock.sendMessage(contactId, {
+      image: { url: imagePath },
+      caption: caption,
+      footer: footer,
+      buttons: buttons,
+    });
+  };
 
   // Make connection
   sock.ev.on("connection.update", (update) => {
@@ -42,7 +87,16 @@ async function connectToWhatsapp() {
 
   sock.ev.on("messages.upsert", async ({ messages }) => {
     console.log("New Messages", messages);
-    messageHandler(messages, sock);
+    mainHandler(
+      messages,
+      sock,
+      sendTextMessage,
+      sendAudioMessage,
+      sendVideoMessage,
+      sendImageMessage,
+      sendStickerMessage,
+      sendButtonMessage
+    );
   });
 
   sock.ev.on("chats.update", async (chats) => {
