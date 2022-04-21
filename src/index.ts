@@ -103,8 +103,8 @@ async function connectToWhatsapp() {
       messages,
       sock,
       sendTextMessage,
-      sendAudioMessage,
       sendVideoMessage,
+      sendAudioMessage,
       sendImageMessage,
       sendStickerMessage,
       sendButtonMessage
