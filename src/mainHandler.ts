@@ -31,17 +31,17 @@ export async function mainHandler(
 ) {
   const m = messages[0];
   if (!m.message) return;
-  const sender = m.key.remoteJid;
+  const chatId = m.key.remoteJid;
   const groupId = m.key.remoteJid?.split("-")[1] || "";
   console.log(groupId);
-  const senderId = `${m.key.remoteJid?.split("-")[0]}@s.whatsapp.net` || "";
+  const senderId = m.key.participant
   const messageType = Object.keys(m.message)[0];
   const splitMessage = m.message?.conversation?.split(" ") || "";
   const splitExtendedMessage =
     m.message?.extendedTextMessage?.text?.split(" ") || "";
   if (m.message?.conversation === "!comandos") {
     sendTextMessage(
-      sender!,
+      chatId!,
       "╭──┈ ➤ ✎ 【﻿ＭＥＮＵ】\n" +
         "│\n" +
         "│  ➤ !stick [imagen/gif/video]\n" +
@@ -69,7 +69,7 @@ export async function mainHandler(
   randomNumberHandler(m, sock);
   ytDownloadHandler(
     splitMessage,
-    sender,
+    chatId,
     sock,
     splitExtendedMessage,
     sendTextMessage,
@@ -79,12 +79,12 @@ export async function mainHandler(
     m,
     messageType,
     sendStickerMessage,
-    sender,
+    chatId,
     sendTextMessage
   );
 
   if (splitExtendedMessage[0] === "!ban") {
-    const groupMetadata: GroupMetadata = await sock.groupMetadata(sender);
+    const groupMetadata: GroupMetadata = await sock.groupMetadata(chatId);
     const member = groupMetadata.participants.find(
       (member) =>
         member.id === senderId &&
@@ -97,7 +97,7 @@ export async function mainHandler(
       senderId &&
       member!
     ) {
-      sendTextMessage(sender!, "🚫");
+      sendTextMessage(chatId!, "🚫");
     }
   }
 }
