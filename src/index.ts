@@ -97,7 +97,7 @@ async function connectToWhatsapp() {
     // console.log(await sock.groupMetadata(messages[0].key.remoteJid || ""));
     console.log(
       "New Messages",
-      messages[0].message?.extendedTextMessage?.contextInfo?.mentionedJid
+      messages[0]
     );
     mainHandler(
       messages,
