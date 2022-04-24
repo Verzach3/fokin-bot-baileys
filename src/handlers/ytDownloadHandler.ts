@@ -37,7 +37,6 @@ export function ytDownloadHandler(
       sender || "",
       sendTextMessage,
       sendVideoMessage,
-      sendAudioMessage
     );
     return;
   } else if (splitExtendedMessage![0] === "!dlaudio") {
@@ -45,7 +44,6 @@ export function ytDownloadHandler(
       splitExtendedMessage![1],
       sender || "",
       sendTextMessage,
-      sendVideoMessage,
       sendAudioMessage
     );
     return;
