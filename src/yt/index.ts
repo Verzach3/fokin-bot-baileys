@@ -107,7 +107,7 @@ export async function dlAudio(
         quality: "360p",
         type: "audio",
       });
-      stream.pipe(createWriteStream(`./media/${filename}.mp3`));
+      stream.pipe(createWriteStream(`./media/${filename}.aac`));
 
       stream.on("start", () => {
         console.info("[DOWNLOADER]", "Starting download now!");
@@ -146,7 +146,7 @@ export async function dlAudio(
         } catch (error) {}
         console.info("[DOWNLOADER]", "Done!");
         console.log(video);
-        // await convertAACToMp3(`./media/${filename}.aac`, `./media/${filename}.mp3`);
+        await convertAACToMp3(`./media/${filename}.aac`, `./media/${filename}.mp3`);
         sendAudioMessage(senderId, `./media/${filename}.mp3`);
       });
 
