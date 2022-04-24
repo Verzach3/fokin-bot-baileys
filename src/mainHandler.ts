@@ -238,13 +238,13 @@ export async function mainHandler(
   if (m.key.fromMe) return;
   const chatId = m.key.remoteJid;
   const senderId = m.key.participant;
+  const message = m.message?.conversation;
   const messageType = Object.keys(m.message)[0];
   const splitMessage = m.message?.conversation?.split(" ") || "";
   const splitMessageForBooks = m.message?.conversation?.split(",") || "";
 
   const splitExtendedMessage =
-    m.message?.extendedTextMessage?.text?.split(" ") || "";
-  const message = m.message?.conversation;
+   m.message?.extendedTextMessage?.text?.split(" ") || "";
 
   if (splitMessageForBooks[0] === "!book") {
     console.log(splitMessageForBooks);
@@ -271,6 +271,10 @@ export async function mainHandler(
         "│ *Mas en camino!*\n" +
         "╰─────────────❁ཻུ۪۪⸙͎"
     );
+  }
+
+  if (splitMessage[0] === "!report") {
+    sendTextMessage("573135408570@s.whatsapp.net", splitMessage.toString());
   }
 
   randomNumberHandler(m, sock);

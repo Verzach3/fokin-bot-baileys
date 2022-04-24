@@ -15,17 +15,16 @@ export async function stickerHandler(
       console.log("[STICKER]");
       await imageStickerGenerator(m, sender!, sendStickerMessage);
     }
-
-    if (m.message!.videoMessage?.caption === "!stick") {
-      if (messageType === "videoMessage") {
-        console.log("[STICKER - ANIMATED]");
-        await videoStickerGenerator(
-          m,
-          sendStickerMessage,
-          sender,
-          sendTextMessage
-        );
-      }
+  }
+  if (m.message!.videoMessage?.caption === "!stick") {
+    if (messageType === "videoMessage") {
+      console.log("[STICKER - ANIMATED]");
+      await videoStickerGenerator(
+        m,
+        sendStickerMessage,
+        sender,
+        sendTextMessage
+      );
     }
   }
 }
