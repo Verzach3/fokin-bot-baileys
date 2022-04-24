@@ -2,6 +2,7 @@ import { createWriteStream } from "fs";
 import { nanoid } from "nanoid";
 import Innertube from "youtubei.js";
 import ytdl from "ytdl-core";
+import { convertAACToMp3 } from "../lib/convertAACToMP3";
 
 const IT = require("youtubei.js");
 
@@ -145,7 +146,8 @@ export async function dlAudio(
         } catch (error) {}
         console.info("[DOWNLOADER]", "Done!");
         console.log(video);
-        sendAudioMessage(senderId, `./media/${filename}.aac`);
+        await convertAACToMp3(`./media/${filename}.aac`, `./media/${filename}.mp3`);
+        sendAudioMessage(senderId, `./media/${filename}.mp3`);
       });
 
       stream.on("error", (err: any) => console.error("[ERROR]", err));
