@@ -6,7 +6,7 @@ import { writeFile } from "fs/promises";
 import { nanoid } from "nanoid";
 import sharp from "sharp";
 
-export async function imageStickerGenerator(m: proto.IWebMessageInfo, sendStickerMessage: Function) {
+export async function imageStickerGenerator(m: proto.IWebMessageInfo,chatId: string, sendStickerMessage: Function) {
   const stream = await downloadContentFromMessage(
     m.message!.imageMessage as any,
     "image"
@@ -22,5 +22,5 @@ export async function imageStickerGenerator(m: proto.IWebMessageInfo, sendSticke
     .resize({ width: 512, height: 512 })
     .webp({ quality: 100 })
     .toFile(`./media/${filename}.webp`);
-    sendStickerMessage(m.key.remoteJid, `./media/${filename}.webp`)
+    sendStickerMessage(chatId , `./media/${filename}.webp`)
 }

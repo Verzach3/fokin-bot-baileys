@@ -4,6 +4,8 @@ import { ytDownloadHandler } from "./handlers/ytDownloadHandler";
 import { stickerHandler } from "./handlers/stickerHandler";
 import { banHandler } from "./banHandler";
 import { libGenHandler } from "./handlers/libGenHandler";
+import { imageStickerGenerator } from "./lib/imageStickerGenerator";
+import { videoStickerGenerator } from "./lib/videoStickerGenerator";
 
 export async function mainHandler(
   messages: proto.IWebMessageInfo[],
@@ -57,6 +59,7 @@ export async function mainHandler(
 
   //Help Screen
   if (m.message?.conversation === "!comandos") {
+    console.log("[Baileys] Help Screen")
     sendTextMessage(
       chatId!,
       "╭──┈ ➤ ✎ 【﻿ＭＥＮＵ】\n" +
@@ -87,16 +90,29 @@ export async function mainHandler(
     sendVideoMessage,
     sendAudioMessage
   );
-  stickerHandler(
-    m,
-    messageType,
-    sendStickerMessage,
-    chatId,
-    sendTextMessage
-  );
+  // stickerHandler(
+  //   m,
+  //   messageType,
+  //   sendStickerMessage,
+  //   chatId,
+  //   sendTextMessage
+  // );
+
+    if (m.message!.videoMessage?.caption === "!stick") {
+    if (messageType === "imageMessage") {
+      // download stream
+      console.log("[STICKER]")
+      await imageStickerGenerator(m, chatId! ,sendStickerMessage);
+  }
+
+    if (messageType === "videoMessage") {
+    console.log("[STICKER - ANIMATED]")
+      await videoStickerGenerator(m, sendStickerMessage, chatId, sendTextMessage);
+    }
 
   if (splitExtendedMessage[0] === "!ban") {
+    console.log("[BAN]")
     banHandler(sock, chatId, senderId, m, messages, sendTextMessage);
   }
 }
-
+}
