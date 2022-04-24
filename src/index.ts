@@ -60,7 +60,7 @@ async function connectToWhatsapp() {
     imagePath: string
   ) => {
     sock.sendMessage(contactId, {
-      image: { url: imagePath },
+      image: { url: imagePath! },
       caption: caption,
       footer: footer,
       buttons: buttons,
@@ -92,16 +92,9 @@ async function connectToWhatsapp() {
   sock.ev.on("creds.update", saveState);
 
   sock.ev.on("messages.upsert", async ({ messages }) => {
-    console.log("[USERID]", sock.user.id);
-    // console.log(messages[0].key)
-    // console.log(await sock.groupMetadata(messages[0].key.remoteJid || ""));
-    console.log(
-      "New Messages",
-      messages[0].message?.extendedTextMessage?.contextInfo
-    );
     mainHandler(
       messages,
-      sock,
+      sock as any,
       sendTextMessage,
       sendVideoMessage,
       sendAudioMessage,
@@ -109,10 +102,6 @@ async function connectToWhatsapp() {
       sendStickerMessage,
       sendButtonMessage
     );
-  });
-
-  sock.ev.on("chats.update", async (chats) => {
-    console.log("New Chats", chats);
   });
 
   sock.ev.on("group-participants.update", (participants) => {
