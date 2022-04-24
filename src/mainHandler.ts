@@ -244,7 +244,7 @@ export async function mainHandler(
   const splitMessageForBooks = m.message?.conversation?.split(",") || "";
 
   const splitExtendedMessage =
-   m.message?.extendedTextMessage?.text?.split(" ") || "";
+    m.message?.extendedTextMessage?.text?.split(" ") || "";
 
   if (splitMessageForBooks[0] === "!book") {
     console.log(splitMessageForBooks);
@@ -262,6 +262,7 @@ export async function mainHandler(
         "│  ➤ !dlvideo [link]\n" +
         "│  ➤ !dlaudio [link]\n" +
         "│  ➤ !info [comando]\n" +
+        "│  ➤ !report [problema]\n" +
         "│\n" +
         "│【﻿ＧＲＵＰＯＳ】\n" +
         "│  ➤ !ban [@usuario]\n" +
@@ -277,6 +278,30 @@ export async function mainHandler(
     sendTextMessage("573135408570@s.whatsapp.net", splitMessage.toString());
   }
 
+  if (splitMessage[0] === "!info") {
+    if (splitMessage[1] === "!stick") {
+      sendTextMessage(
+        chatId!,
+        "Genera stickers con la imagen o video que envies"
+      );
+    }
+    if (splitMessage[1] === "!dlvideo") {
+      sendTextMessage(chatId!, "Descarga videos de youtube con el link");
+    }
+    if (splitMessage[1] === "!dlaudio") {
+      sendTextMessage(chatId!, "Descarga audios de youtube con el link");
+    }
+    if (splitMessage[1] === "!ban") {
+      sendTextMessage(
+        chatId!,
+        "Banea el usuario mencionandolo con el @ o respondiendo un mensaje de este con !ban"
+      );
+    }
+    if (splitMessage[1] === "!report") {
+      sendTextMessage(chatId!, "Reporta un problema a el desarrollador");
+    }
+  }
+
   randomNumberHandler(m, sock);
   ytDownloadHandler(
     splitMessage,
@@ -287,18 +312,10 @@ export async function mainHandler(
     sendVideoMessage,
     sendAudioMessage
   );
-  stickerHandler(
-    m,
-    messageType,
-    sendStickerMessage,
-    chatId,
-    sendTextMessage
-  );
+  stickerHandler(m, messageType, sendStickerMessage, chatId, sendTextMessage);
 
-
-    if (splitExtendedMessage[0] === "!ban") {
-      console.log("[BAN]");
-      banHandler(sock, chatId, senderId, m, messages, sendTextMessage);
-    }
+  if (splitExtendedMessage[0] === "!ban") {
+    console.log("[BAN]");
+    banHandler(sock, chatId, senderId, m, messages, sendTextMessage);
   }
-
+}
