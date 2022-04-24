@@ -281,7 +281,7 @@ export async function mainHandler(
   if (splitMessage[0] === "!info") {
     if (splitMessage[1] === "" || splitMessage[1] === undefined) {
       sendTextMessage(chatId!, "Te falta el nombre de el comando: ejemplo !info !stick");
-    } else {
+    } else 
     if (splitMessage[1] === "!stick") {
       sendTextMessage(
         chatId!,
