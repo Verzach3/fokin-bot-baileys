@@ -15,7 +15,6 @@ export async function dlVideo(
     videoPath: string,
     caption?: string | undefined
   ) => void,
-  sendAudioMessage: (contactId: string, audioPath: string) => void
 ) {
   const youtube = await new IT();
 
