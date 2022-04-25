@@ -251,6 +251,18 @@ export async function mainHandler(
     libGenHandler(splitMessageForBooks[1], chatId || "", sock);
   }
 
+  if (splitMessage[0] === "!num") {
+    try {
+      let text = "Opps!";
+      if (splitMessage[1] === "toD") {
+        text = parseInt(splitMessage[2], parseInt(splitMessage[3])).toString();
+      } else if (splitMessage[1] === "fromD") {
+        text = parseInt(splitMessage[2]).toString(parseInt(splitMessage[3]));
+      }
+      sendTextMessage(chatId!, text);
+    } catch (error) {}
+  }
+
   //Help Screen
   if (m.message?.conversation === "!comandos") {
     console.log("[Baileys] Help Screen");
@@ -280,9 +292,11 @@ export async function mainHandler(
 
   if (splitMessage[0] === "!info") {
     if (splitMessage[1] === "" || splitMessage[1] === undefined) {
-      sendTextMessage(chatId!, "Te falta el nombre de el comando: ejemplo !info !stick");
-    } else 
-    if (splitMessage[1] === "!stick") {
+      sendTextMessage(
+        chatId!,
+        "Te falta el nombre de el comando: ejemplo !info !stick"
+      );
+    } else if (splitMessage[1] === "!stick") {
       sendTextMessage(
         chatId!,
         "Genera stickers con la imagen o video que envies"
