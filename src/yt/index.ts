@@ -106,7 +106,7 @@ export async function dlAudio(
         quality: "144p",
         type: "audio",
       });
-      stream.pipe(createWriteStream(`./media/${filename}.mp4`));
+      stream.pipe(createWriteStream(`./media/${filename}.mp3`));
 
       stream.on("start", () => {
         console.info("[DOWNLOADER]", "Starting download now!");
