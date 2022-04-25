@@ -260,7 +260,7 @@ export async function mainHandler(
         "│\n" +
         "│  ➤ !stick [imagen/gif/video]\n" +
         "│  ➤ !dlvideo [link]\n" +
-        "│  ➤ !dlaudio [link]\n" +
+        // "│  ➤ !dlaudio [link]\n" +
         "│  ➤ !info [comando]\n" +
         "│  ➤ !report [problema]\n" +
         "│\n" +
@@ -291,9 +291,9 @@ export async function mainHandler(
     if (splitMessage[1] === "!dlvideo") {
       sendTextMessage(chatId!, "Descarga videos de youtube con el link");
     }
-    if (splitMessage[1] === "!dlaudio") {
-      sendTextMessage(chatId!, "Descarga audios de youtube con el link");
-    }
+    // if (splitMessage[1] === "!dlaudio") {
+    //   sendTextMessage(chatId!, "Descarga audios de youtube con el link");
+    // }
     if (splitMessage[1] === "!ban") {
       sendTextMessage(
         chatId!,
