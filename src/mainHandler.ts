@@ -265,7 +265,9 @@ export async function mainHandler(
   }
 
   if (splitMessage[0] === "!solve") {
-    Mexp.eval(splitMessage.slice(1).join(""))
+    sendTextMessage(chatId!,
+      Mexp.eval(splitMessage.slice(1).join(""))
+      )
   }
 
   //Help Screen
