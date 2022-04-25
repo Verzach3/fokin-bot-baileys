@@ -35,6 +35,7 @@ import { banHandler } from "./banHandler";
 import { libGenHandler } from "./handlers/libGenHandler";
 import { imageStickerGenerator } from "./lib/imageStickerGenerator";
 import { videoStickerGenerator } from "./lib/videoStickerGenerator";
+import Mexp from "math-expression-evaluator";
 
 export async function mainHandler(
   messages: proto.IWebMessageInfo[],
@@ -240,8 +241,8 @@ export async function mainHandler(
   const senderId = m.key.participant;
   const message = m.message?.conversation;
   const messageType = Object.keys(m.message)[0];
-  const splitMessage = m.message?.conversation?.split(" ") || "";
-  const splitMessageForBooks = m.message?.conversation?.split(",") || "";
+  const splitMessage = m.message?.conversation?.split(" ") || [];
+  const splitMessageForBooks = m.message?.conversation?.split(",") || [];
 
   const splitExtendedMessage =
     m.message?.extendedTextMessage?.text?.split(" ") || "";
@@ -261,6 +262,10 @@ export async function mainHandler(
       }
       sendTextMessage(chatId!, text);
     } catch (error) {}
+  }
+
+  if (splitMessage[0] === "!solve") {
+    Mexp.eval(splitMessage.slice(1).join(""))
   }
 
   //Help Screen

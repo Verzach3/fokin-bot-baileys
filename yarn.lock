@@ -158,6 +158,11 @@
   resolved "https://registry.yarnpkg.com/@types/long/-/long-4.0.1.tgz#459c65fa1867dafe6a8f322c4c51695663cc55e9"
   integrity sha512-5tXH6Bx/kNGd3MgffdmP4dy2Z+G4eaXw0SE81Tq3BNadtnMR5/ySMzX4SLEzHJzSmPNn4HIdpQsBvXMUykr58w==
 
+"@types/math-expression-evaluator@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@types/math-expression-evaluator/-/math-expression-evaluator-1.2.2.tgz#05970d669d8c27c43f97d1557fa2a67e79698100"
+  integrity sha512-eHy3f0C2mfFdHbK2zoKRXaM830dm2pSTUBWZ3aJCWxFsOxErWsXNPziFLliqBddGYreCM4Nyl1IZwFCt0jwRNg==
+
 "@types/node@*", "@types/node@>=13.7.0", "@types/node@^17.0.25":
   version "17.0.25"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.25.tgz#527051f3c2f77aa52e5dc74e45a3da5fb2301448"
@@ -640,6 +645,11 @@ m3u8stream@^0.8.6:
   dependencies:
     miniget "^4.2.2"
     sax "^1.2.4"
+
+math-expression-evaluator@^1.3.14:
+  version "1.3.14"
+  resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.3.14.tgz#0ebeaccf65fea0f6f5a626f88df41814e5fcd9bf"
+  integrity sha512-M6AMrvq9bO8uL42KvQHPA2/SbAobA0R7gviUmPrcTcGfdwpaLitz4q2Euzx2lP9Oy88vxK3HOrsISgSwKsYS4A==
 
 media-typer@^1.1.0:
   version "1.1.0"
