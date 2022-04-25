@@ -104,7 +104,7 @@ export async function dlAudio(
       const stream = youtube.download(videoId, {
         format: "mp4",
         quality: "144p",
-        type: "videoandaudio",
+        type: "audio",
       });
       stream.pipe(createWriteStream(`./media/${filename}.mp4`));
 
@@ -145,7 +145,7 @@ export async function dlAudio(
         } catch (error) {}
         console.info("[DOWNLOADER]", "Done!");
         console.log(video);
-        await convertAACToMp3(`./media/${filename}.mp4`, `./media/${filename}.mp3`);
+        // await convertAACToMp3(`./media/${filename}.mp4`, `./media/${filename}.mp3`);
         sendAudioMessage(senderId, `./media/${filename}.mp3`);
       });
 

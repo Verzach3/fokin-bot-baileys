@@ -34,7 +34,7 @@ async function connectToWhatsapp() {
   };
 
   const sendAudioMessage = async (contactId: string, audioPath: string) => {
-    sock.sendMessage(contactId, { audio: { url: audioPath } });
+    sock.sendMessage(contactId, { audio: { url: audioPath }, mimetype: "audio/mp4" });
   };
 
   const sendImageMessage = async (
