@@ -268,7 +268,7 @@ export async function mainHandler(
     sendTextMessage(chatId!,
       Mexp.eval(splitMessage.slice(1).join(""))
       )
-  }
+  } 
 
   //Help Screen
   if (m.message?.conversation === "!comandos") {
@@ -279,6 +279,8 @@ export async function mainHandler(
         "│\n" +
         "│  ➤ !stick [imagen/gif/video]\n" +
         "│  ➤ !dlvideo [link]\n" +
+        "│  ➤ !num [fromD/toD] [número] [base]\n" +
+        "│  ➤ !solve [operacion]\n" +
         // "│  ➤ !dlaudio [link]\n" +
         "│  ➤ !info [comando]\n" +
         "│  ➤ !report [problema]\n" +
@@ -324,6 +326,15 @@ export async function mainHandler(
     if (splitMessage[1] === "!report") {
       sendTextMessage(chatId!, "Reporta un problema a el desarrollador");
     }
+    
+    if (splitMessage[1] === "!num"){
+    sendTextMessage(chatId!, "Convertidor de numeros a diferentes base ej: decimal a binario");
+  }
+
+      if (splitMessage[1] === "!solve"){
+    sendTextMessage(chatId!, "Resuelve operacione matematicas simples");
+  }
+
   }
 
   randomNumberHandler(m, sock);
