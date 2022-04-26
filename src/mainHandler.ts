@@ -243,7 +243,7 @@ export async function mainHandler(
     console.log("[No message]");
     return;
   }
-  // if (m.key.fromMe) return;
+  if (m.key.fromMe) return;
   const chatId = m.key.remoteJid;
   const senderId = m.key.participant;
   const message = m.message?.conversation;
