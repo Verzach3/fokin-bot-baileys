@@ -6,3 +6,5 @@ auth.json
 dist/
 
 db/
+
+media/

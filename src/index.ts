@@ -95,7 +95,8 @@ async function connectToWhatsapp() {
   sock.ev.on("creds.update", saveState);
 
   sock.ev.on("messages.upsert", async ({ messages }) => {
-    console.log("[MESSAGE FROM]", messages[0].key.remoteJid); // sender
+    console.log("[MESSAGE FROM]", messages[0]); // sender
+    console.log(messages[0]); // message
     mainHandler(
       messages,
       sock as any,

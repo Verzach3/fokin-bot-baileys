@@ -252,7 +252,7 @@ export async function mainHandler(
   const splitMessageForBooks = m.message?.conversation?.split(",") || [];
   const splitExtendedMessage =
     m.message?.extendedTextMessage?.text?.split(" ") || [];
-  const groupMetadata: GroupMetadata = await sock.groupMetadata!(chatId!);
+  const groupMetadata: GroupMetadata = m.key.participant === undefined ? null as any :await sock.groupMetadata!(chatId!)
   function commandCheck(command: string) {
     if (splitMessage[0] === command) return true;
     if (splitExtendedMessage[0] === command) return true;
@@ -270,6 +270,8 @@ export async function mainHandler(
       return true;
     return false;
   }
+
+  console.log(`${commandCheck("/start") ? "[YESSSSSSSS]" : "[NOOOOOOO]" }`);
 
   console.log(
     `[${chatId} - MESSAGE]`,
