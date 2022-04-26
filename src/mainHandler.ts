@@ -32,14 +32,12 @@ import { randomNumber as randomNumberHandler } from "./handlers/randomGeneratorH
 import { ytDownloadHandler } from "./handlers/ytDownloadHandler";
 import { stickerHandler } from "./handlers/stickerHandler";
 import { banHandler } from "./banHandler";
-import { imageStickerGenerator } from "./lib/imageStickerGenerator";
-import { videoStickerGenerator } from "./lib/videoStickerGenerator";
 import { infoHandler } from "./handlers/infoHandler";
 import { helpHandler } from "./handlers/helpHandler";
 import { mathHandler } from "./handlers/mathHandler";
 import { booksHandler } from "./handlers/booksHandler";
 import levelup from "levelup";
-import LevelDOWN, { LevelDown } from "leveldown";
+import { LevelDown } from "leveldown";
 import { AbstractIterator } from "abstract-leveldown";
 
 export async function mainHandler(
@@ -242,9 +240,9 @@ export async function mainHandler(
   const debug = false; // Deshabilita los comandos
   const m = messages[0];
   if (!m.message) {
-    console.log("[No message]");  
+    console.log("[No message]");
     return;
-  } 
+  }
   // if (m.key.fromMe) return;
   const chatId = m.key.remoteJid;
   const senderId = m.key.participant;
@@ -262,15 +260,22 @@ export async function mainHandler(
     return false;
   }
   function checkAdmin() {
-    if (groupMetadata.participants.find(
-      (member) =>
-        member.id === senderId &&
-        (member.admin === "admin" || member.admin === "superadmin")
-    )) return true;
+    if (
+      groupMetadata.participants.find(
+        (member) =>
+          member.id === senderId &&
+          (member.admin === "admin" || member.admin === "superadmin")
+      )
+    )
+      return true;
     return false;
   }
 
-  console.log(`[${chatId} - MESSAGE]`, message!, splitExtendedMessage!.join(" "));
+  console.log(
+    `[${chatId} - MESSAGE]`,
+    message!,
+    splitExtendedMessage!.join(" ")
+  );
 
   if (splitMessage[0] === "!disablecmd") {
     if (splitMessage[1] === "!stick") {
@@ -314,22 +319,23 @@ export async function mainHandler(
     sendAudioMessage
   );
 
-    if (commandCheck("!admin?")) {
-      checkAdmin() ? sendTextMessage(chatId!, "Si") : sendTextMessage(chatId!, "No");
-    }
+  if (commandCheck("!admin?")) {
+    checkAdmin()
+      ? sendTextMessage(chatId!, "Si")
+      : sendTextMessage(chatId!, "No");
+  }
 
-    async function keyCheck(key:string) {
-      try {
-        return (await db.get(`${key}_stick`)).toString()
-      } catch (error) {
-        return "not set";
-      }
-      
+  async function keyCheck(key: string) {
+    try {
+      return (await db.get(`${key}_stick`)).toString();
+    } catch (error) {
+      return "not set";
     }
+  }
 
   //!stick
-  console.log("[KEYCHECK - STICK] ",await keyCheck(chatId!));
-  if (await keyCheck(chatId!) === "false" && commandCheck("!stick") ){
+  console.log("[KEYCHECK - STICK] ", await keyCheck(chatId!));
+  if ((await keyCheck(chatId!)) === "false" && commandCheck("!stick")) {
     sendTextMessage(chatId!, "Stickers deshabilitados");
   } else {
     console.log("[EXECUTED - STICK] ");
