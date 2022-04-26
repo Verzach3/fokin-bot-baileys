@@ -258,12 +258,14 @@ export async function mainHandler(
   if (splitMessage[0] === "!disablecmd") {
     if (splitMessage[1] === "!stick") {
       db.put(`${chatId}_stick`, "false");
+      sendTextMessage(chatId!, "Se ha deshabilitado el comando !stick");
     }
   }
 
   if (splitMessage[0] === "!enablecmd") {
     if (splitMessage[1] === "!stick") {
       db.put(`${chatId}_stick`, "true");
+      sendTextMessage(chatId!, "Se ha habilitado el comando !stick");
     }
   }
   if (debug) return;
