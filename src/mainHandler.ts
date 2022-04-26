@@ -277,7 +277,7 @@ export async function mainHandler(
     splitExtendedMessage!.join(" ")
   );
 
-  if (commandCheck("!disablecmd") && checkAdmin()) {
+  if (commandCheck("!disable") && checkAdmin()) {
     if (splitMessage[1] === "!stick") {
       db.put(`${chatId}_stick`, "false");
       sendTextMessage(chatId!, "Se ha deshabilitado el comando !stick");
@@ -289,7 +289,7 @@ export async function mainHandler(
     );
   }
 
-  if (commandCheck("!enablecmd") && checkAdmin()) {
+  if (commandCheck("!enable") && checkAdmin()) {
     if (splitMessage[1] === "!stick") {
       db.put(`${chatId}_stick`, "true");
       sendTextMessage(chatId!, "Se ha habilitado el comando !stick");
