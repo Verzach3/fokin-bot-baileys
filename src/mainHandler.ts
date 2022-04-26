@@ -282,7 +282,7 @@ export async function mainHandler(
       db.put(`${chatId}_stick`, "false");
       sendTextMessage(chatId!, "Se ha deshabilitado el comando !stick");
     }
-  } else if (commandCheck("!disablecmd") && !checkAdmin()) {
+  } else if (commandCheck("!disable") && !checkAdmin()) {
     sendTextMessage(
       chatId!,
       "Solo los administradores pueden deshabilitar los comandos"
@@ -294,7 +294,7 @@ export async function mainHandler(
       db.put(`${chatId}_stick`, "true");
       sendTextMessage(chatId!, "Se ha habilitado el comando !stick");
     }
-  } else if (commandCheck("!enablecmd") && !checkAdmin()) {
+  } else if (commandCheck("!enable") && !checkAdmin()) {
     sendTextMessage(
       chatId!,
       "Solo los administradores pueden habilitar los comandos"
