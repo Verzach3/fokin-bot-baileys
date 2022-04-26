@@ -327,6 +327,7 @@ export async function mainHandler(
   if (await keyCheck(chatId!) === "false" && commandCheck("!stick") ){
     sendTextMessage(chatId!, "Stickers deshabilitados");
   } else {
+    console.log("[EXECUTED - STICK] ");
     stickerHandler(m, messageType, sendStickerMessage, chatId, sendTextMessage);
   }
 
