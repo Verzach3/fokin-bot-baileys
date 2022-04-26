@@ -251,10 +251,21 @@ export async function mainHandler(
   const splitMessageForBooks = m.message?.conversation?.split(",") || [];
   const splitExtendedMessage =
     m.message?.extendedTextMessage?.text?.split(" ") || "";
-  const values = ["1234", "123456"];
-  db.put("test", JSON.stringify(values));
-  console.log(JSON.parse((await db.get("test")).toString()));
+  // const values = ["1234", "123456"];
+  // db.put("test", JSON.stringify(values));
+  // console.log(JSON.parse((await db.get("test")).toString()));
 
+  if (splitMessage[0] === "!disablecmd") {
+    if (splitMessage[1] === "!stick") {
+      db.put(`${chatId}_stick`, "false");
+    }
+  }
+
+  if (splitMessage[0] === "!enablecmd") {
+    if (splitMessage[1] === "!stick") {
+      db.put(`${chatId}_stick`, "true");
+    }
+  }
   if (debug) return;
   // Handler === Manejador, Reciben y responden mensajes
   // Desde aqui comienzan los handlers
@@ -283,7 +294,13 @@ export async function mainHandler(
     sendVideoMessage,
     sendAudioMessage
   );
-  stickerHandler(m, messageType, sendStickerMessage, chatId, sendTextMessage);
+
+  //!stick
+  if ((await db.get(`${chatId}_stick`)).toString() === "false") {
+    sendTextMessage(chatId!, "Stickers deshabilitados");
+  } else {
+    stickerHandler(m, messageType, sendStickerMessage, chatId, sendTextMessage);
+  }
 
   if (splitExtendedMessage[0] === "!ban") {
     console.log("[BAN]");
