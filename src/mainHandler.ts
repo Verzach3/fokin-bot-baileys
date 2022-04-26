@@ -38,6 +38,9 @@ import { infoHandler } from "./handlers/infoHandler";
 import { helpHandler } from "./handlers/helpHandler";
 import { mathHandler } from "./handlers/mathHandler";
 import { booksHandler } from "./handlers/booksHandler";
+import levelup from "levelup";
+import LevelDOWN, { LevelDown } from "leveldown";
+import { AbstractIterator } from "abstract-leveldown";
 
 export async function mainHandler(
   messages: proto.IWebMessageInfo[],
@@ -214,7 +217,7 @@ export async function mainHandler(
       timeoutMs?: number | undefined
     ) => Promise<void>;
   },
-
+  db: levelup.LevelUp<LevelDown, AbstractIterator<any, any>>,
   sendTextMessage: (contactId: string, message: string) => void,
   sendVideoMessage: (
     contactId: string,
@@ -236,6 +239,7 @@ export async function mainHandler(
     imagePath: string
   ) => void
 ) {
+  const debug = true; // Deshabilita los comandos
   const m = messages[0];
   if (!m.message) return;
   if (m.key.fromMe) return;
@@ -247,19 +251,24 @@ export async function mainHandler(
   const splitMessageForBooks = m.message?.conversation?.split(",") || [];
   const splitExtendedMessage =
     m.message?.extendedTextMessage?.text?.split(" ") || "";
+  const values = ["1234", "123456"];
+  db.put("test", JSON.stringify(values));
+  console.log(JSON.parse((await db.get("test")).toString()));
 
-
-
+  if (debug) return;
   // Handler === Manejador, Reciben y responden mensajes
   // Desde aqui comienzan los handlers
   booksHandler(splitMessageForBooks, chatId, sock);
-  mathHandler(splitMessage, sendTextMessage, chatId); 
+  mathHandler(splitMessage, sendTextMessage, chatId);
 
   //Help Screen
   helpHandler(m, sendTextMessage, chatId);
 
   if (splitMessage[0] === "!report") {
-    sendTextMessage("573135408570@s.whatsapp.net", splitMessage.toString() + `[FROM] ${chatId}`);
+    sendTextMessage(
+      "573135408570@s.whatsapp.net",
+      splitMessage.toString() + `[FROM] ${chatId}`
+    );
   }
 
   infoHandler(splitMessage, sendTextMessage, chatId);
@@ -281,4 +290,3 @@ export async function mainHandler(
     banHandler(sock, chatId, senderId, m, messages, sendTextMessage);
   }
 }
-
