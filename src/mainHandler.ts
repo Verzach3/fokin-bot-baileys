@@ -242,7 +242,7 @@ export async function mainHandler(
   const debug = false; // Deshabilita los comandos
   const m = messages[0];
   if (!m.message) return;
-  if (m.key.fromMe) return;
+  // if (m.key.fromMe) return;
   const chatId = m.key.remoteJid;
   const senderId = m.key.participant;
   const message = m.message?.conversation;
@@ -250,7 +250,7 @@ export async function mainHandler(
   const splitMessage = m.message?.conversation?.split(" ") || [];
   const splitMessageForBooks = m.message?.conversation?.split(",") || [];
   const splitExtendedMessage =
-    m.message?.extendedTextMessage?.text?.split(" ") || "";
+    m.message?.extendedTextMessage?.text?.split(" ") || [];
   const groupMetadata: GroupMetadata = await sock.groupMetadata!(chatId!);
   function commandCheck(command: string) {
     if (splitMessage[0] === command) return true;
@@ -267,7 +267,7 @@ export async function mainHandler(
     return false;
   }
 
-  console.log(`[${chatId} - MESSAGE]`, splitMessage[0], splitExtendedMessage[0], message);
+  console.log(`[${chatId} - MESSAGE]`, message!, splitExtendedMessage!.join(" "));
 
   if (splitMessage[0] === "!disablecmd") {
     if (splitMessage[1] === "!stick") {
