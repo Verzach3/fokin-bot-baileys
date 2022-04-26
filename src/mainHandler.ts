@@ -323,13 +323,13 @@ export async function mainHandler(
     }
 
   //!stick
-  console.log("[KEYCHECK] ",await keyCheck(chatId!));
-  if (await keyCheck(chatId!) === "false" && commandCheck("!stick") ){
-    sendTextMessage(chatId!, "Stickers deshabilitados");
-  } else {
+  // console.log("[KEYCHECK] ",await keyCheck(chatId!));
+  // if (await keyCheck(chatId!) === "false" && commandCheck("!stick") ){
+  //   sendTextMessage(chatId!, "Stickers deshabilitados");
+  // } else {
     console.log("[EXECUTED - STICK] ");
     stickerHandler(m, messageType, sendStickerMessage, chatId, sendTextMessage);
-  }
+  // }
 
   if (splitExtendedMessage[0] === "!ban") {
     console.log("[BAN]");
