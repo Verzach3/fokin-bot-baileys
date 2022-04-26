@@ -251,9 +251,11 @@ export async function mainHandler(
   const splitMessageForBooks = m.message?.conversation?.split(",") || [];
   const splitExtendedMessage =
     m.message?.extendedTextMessage?.text?.split(" ") || "";
-  // const values = ["1234", "123456"];
-  // db.put("test", JSON.stringify(values));
-  // console.log(JSON.parse((await db.get("test")).toString()));
+  function commandCheck(command: string) {
+    if (splitMessage[0] === command) return true;
+    if (splitExtendedMessage[0] === command) return true;
+    if (m.message?.imageMessage?.caption === command) return true;
+  }
 
   if (splitMessage[0] === "!disablecmd") {
     if (splitMessage[1] === "!stick") {
@@ -298,7 +300,10 @@ export async function mainHandler(
   );
 
   //!stick
-  if ((await db.get(`${chatId}_stick`)).toString() === "false" && splitMessage[0] === "!stick" || splitExtendedMessage[0] === "!stick") {
+  if (
+    (await db.get(`${chatId}_stick`)).toString() === "true" &&
+    commandCheck("!stick")
+  ) {
     sendTextMessage(chatId!, "Stickers deshabilitados");
   } else {
     stickerHandler(m, messageType, sendStickerMessage, chatId, sendTextMessage);
