@@ -241,7 +241,10 @@ export async function mainHandler(
 ) {
   const debug = false; // Deshabilita los comandos
   const m = messages[0];
-  if (!m.message) return;
+  if (!m.message) {
+    console.log("[No message]");  
+    return;
+  } 
   // if (m.key.fromMe) return;
   const chatId = m.key.remoteJid;
   const senderId = m.key.participant;
