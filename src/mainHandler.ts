@@ -298,7 +298,7 @@ export async function mainHandler(
   );
 
   //!stick
-  if ((await db.get(`${chatId}_stick`)).toString() === "false") {
+  if ((await db.get(`${chatId}_stick`)).toString() === "false" && splitMessage[0] === "!stick") {
     sendTextMessage(chatId!, "Stickers deshabilitados");
   } else {
     stickerHandler(m, messageType, sendStickerMessage, chatId, sendTextMessage);
