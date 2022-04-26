@@ -251,11 +251,20 @@ export async function mainHandler(
   const splitMessageForBooks = m.message?.conversation?.split(",") || [];
   const splitExtendedMessage =
     m.message?.extendedTextMessage?.text?.split(" ") || "";
+  const groupMetadata: GroupMetadata = await sock.groupMetadata!(chatId!);
   function commandCheck(command: string) {
     if (splitMessage[0] === command) return true;
     if (splitExtendedMessage[0] === command) return true;
     if (m.message?.imageMessage?.caption === command) return true;
-    return false
+    return false;
+  }
+  function checkAdmin() {
+    if (groupMetadata.participants.find(
+      (member) =>
+        member.id === senderId &&
+        (member.admin === "admin" || member.admin === "superadmin")
+    )) return true;
+    return false;
   }
 
   if (splitMessage[0] === "!disablecmd") {
@@ -299,6 +308,10 @@ export async function mainHandler(
     sendVideoMessage,
     sendAudioMessage
   );
+
+    if (commandCheck("!admin?")) {
+      checkAdmin() ? sendTextMessage(chatId!, "Si") : sendTextMessage(chatId!, "No");
+    }
 
   //!stick
   if (
