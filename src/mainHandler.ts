@@ -247,7 +247,7 @@ export async function mainHandler(
   const senderId = m.key.participant;
   const message = m.message?.conversation;
   const messageType = Object.keys(m.message)[0];
-  const splitMessage = m.message?.conversation?.split(" ") || m.message?.extendedTextMessage?.text?.split(" ") ||[];
+  const splitMessage = m.message?.conversation?.split(" ") || [];
   const splitMessageForBooks = m.message?.conversation?.split(",") || [];
   const splitExtendedMessage =
     m.message?.extendedTextMessage?.text?.split(" ") || "";
@@ -298,7 +298,7 @@ export async function mainHandler(
   );
 
   //!stick
-  if ((await db.get(`${chatId}_stick`)).toString() === "false" && splitMessage[0] === "!stick") {
+  if ((await db.get(`${chatId}_stick`)).toString() === "false" && splitMessage[0] === "!stick" || splitExtendedMessage[0] === "!stick") {
     sendTextMessage(chatId!, "Stickers deshabilitados");
   } else {
     stickerHandler(m, messageType, sendStickerMessage, chatId, sendTextMessage);
