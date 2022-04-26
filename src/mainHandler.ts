@@ -277,18 +277,28 @@ export async function mainHandler(
     splitExtendedMessage!.join(" ")
   );
 
-  if (splitMessage[0] === "!disablecmd") {
+  if (commandCheck("!disablecmd") && checkAdmin()) {
     if (splitMessage[1] === "!stick") {
       db.put(`${chatId}_stick`, "false");
       sendTextMessage(chatId!, "Se ha deshabilitado el comando !stick");
     }
+  } else if (commandCheck("!disablecmd") && !checkAdmin()) {
+    sendTextMessage(
+      chatId!,
+      "Solo los administradores pueden deshabilitar los comandos"
+    );
   }
 
-  if (splitMessage[0] === "!enablecmd") {
+  if (commandCheck("!enablecmd") && checkAdmin()) {
     if (splitMessage[1] === "!stick") {
       db.put(`${chatId}_stick`, "true");
       sendTextMessage(chatId!, "Se ha habilitado el comando !stick");
     }
+  } else if (commandCheck("!enablecmd") && !checkAdmin()) {
+    sendTextMessage(
+      chatId!,
+      "Solo los administradores pueden habilitar los comandos"
+    );
   }
   if (debug) return;
   // Handler === Manejador, Reciben y responden mensajes
