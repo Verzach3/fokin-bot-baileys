@@ -247,7 +247,7 @@ export async function mainHandler(
   const senderId = m.key.participant;
   const message = m.message?.conversation;
   const messageType = Object.keys(m.message)[0];
-  const splitMessage = m.message?.conversation?.split(" ") || [];
+  const splitMessage = m.message?.conversation?.split(" ") || m.message?.extendedTextMessage?.text?.split(" ") ||[];
   const splitMessageForBooks = m.message?.conversation?.split(",") || [];
   const splitExtendedMessage =
     m.message?.extendedTextMessage?.text?.split(" ") || "";
