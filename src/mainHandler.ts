@@ -267,7 +267,7 @@ export async function mainHandler(
     return false;
   }
 
-  console.log(`[${chatId}]`, splitMessage[0], splitExtendedMessage[0], message);
+  console.log(`[${chatId} - MESSAGE]`, splitMessage[0], splitExtendedMessage[0], message);
 
   if (splitMessage[0] === "!disablecmd") {
     if (splitMessage[1] === "!stick") {
