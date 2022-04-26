@@ -323,6 +323,7 @@ export async function mainHandler(
     }
 
   //!stick
+  console.log("[KEYCHECK] ",keyCheck("!stick"));
   if (await keyCheck("!stick") === "false" && commandCheck("!stick") ){
     sendTextMessage(chatId!, "Stickers deshabilitados");
   } else {
