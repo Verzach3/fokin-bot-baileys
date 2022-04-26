@@ -9,6 +9,7 @@ export async function stickerHandler(
   sender: string | null | undefined,
   sendTextMessage: (contactId: string, message: string) => void
 ) {
+  console.log("[stickerHandler]");
   if (m.message!.imageMessage?.caption === "!stick") {
     if (messageType === "imageMessage") {
       // download stream
