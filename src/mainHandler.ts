@@ -32,10 +32,12 @@ import { randomNumber as randomNumberHandler } from "./handlers/randomGeneratorH
 import { ytDownloadHandler } from "./handlers/ytDownloadHandler";
 import { stickerHandler } from "./handlers/stickerHandler";
 import { banHandler } from "./banHandler";
-import { libGenHandler } from "./handlers/libGenHandler";
 import { imageStickerGenerator } from "./lib/imageStickerGenerator";
 import { videoStickerGenerator } from "./lib/videoStickerGenerator";
-import Mexp from "math-expression-evaluator";
+import { infoHandler } from "./handlers/infoHandler";
+import { helpHandler } from "./handlers/helpHandler";
+import { mathHandler } from "./handlers/mathHandler";
+import { booksHandler } from "./handlers/booksHandler";
 
 export async function mainHandler(
   messages: proto.IWebMessageInfo[],
@@ -243,99 +245,24 @@ export async function mainHandler(
   const messageType = Object.keys(m.message)[0];
   const splitMessage = m.message?.conversation?.split(" ") || [];
   const splitMessageForBooks = m.message?.conversation?.split(",") || [];
-
   const splitExtendedMessage =
     m.message?.extendedTextMessage?.text?.split(" ") || "";
 
-  if (splitMessageForBooks[0] === "!book") {
-    console.log(splitMessageForBooks);
-    libGenHandler(splitMessageForBooks[1], chatId || "", sock);
-  }
 
-  if (splitMessage[0] === "!num") {
-    try {
-      let text = "Opps!";
-      if (splitMessage[1] === "toD") {
-        text = parseInt(splitMessage[2], parseInt(splitMessage[3])).toString();
-      } else if (splitMessage[1] === "fromD") {
-        text = parseInt(splitMessage[2]).toString(parseInt(splitMessage[3]));
-      }
-      sendTextMessage(chatId!, text);
-    } catch (error) {}
-  }
 
-  if (splitMessage[0] === "!solve") {
-    sendTextMessage(chatId!,
-      Mexp.eval(splitMessage.slice(1).join(""))
-      )
-  } 
+  // Handler === Manejador, Reciben y responden mensajes
+  // Desde aqui comienzan los handlers
+  booksHandler(splitMessageForBooks, chatId, sock);
+  mathHandler(splitMessage, sendTextMessage, chatId); 
 
   //Help Screen
-  if (m.message?.conversation === "!comandos") {
-    console.log("[Baileys] Help Screen");
-    sendTextMessage(
-      chatId!,
-      "╭──┈ ➤ ✎ 【﻿ＭＥＮＵ】\n" +
-        "│\n" +
-        "│  ➤ !stick [imagen/gif/video]\n" +
-        "│  ➤ !dlvideo [link]\n" +
-        "│  ➤ !num [fromD/toD] [número] [base]\n" +
-        "│  ➤ !solve [operacion]\n" +
-        // "│  ➤ !dlaudio [link]\n" +
-        "│  ➤ !info [comando]\n" +
-        "│  ➤ !report [problema]\n" +
-        "│\n" +
-        "│【﻿ＧＲＵＰＯＳ】\n" +
-        "│  ➤ !ban [@usuario]\n" +
-        "│\n" +
-        "│\n" +
-        "│\n" +
-        "│ *Mas en camino!*\n" +
-        "╰─────────────❁ཻུ۪۪⸙͎"
-    );
-  }
+  helpHandler(m, sendTextMessage, chatId);
 
   if (splitMessage[0] === "!report") {
-    sendTextMessage("573135408570@s.whatsapp.net", splitMessage.toString());
+    sendTextMessage("573135408570@s.whatsapp.net", splitMessage.toString() + `[FROM] ${chatId}`);
   }
 
-  if (splitMessage[0] === "!info") {
-    if (splitMessage[1] === "" || splitMessage[1] === undefined) {
-      sendTextMessage(
-        chatId!,
-        "Te falta el nombre de el comando: ejemplo !info !stick"
-      );
-    } else if (splitMessage[1] === "!stick") {
-      sendTextMessage(
-        chatId!,
-        "Genera stickers con la imagen o video que envies"
-      );
-    }
-    if (splitMessage[1] === "!dlvideo") {
-      sendTextMessage(chatId!, "Descarga videos de youtube con el link");
-    }
-    // if (splitMessage[1] === "!dlaudio") {
-    //   sendTextMessage(chatId!, "Descarga audios de youtube con el link");
-    // }
-    if (splitMessage[1] === "!ban") {
-      sendTextMessage(
-        chatId!,
-        "Banea el usuario mencionandolo con el @ o respondiendo un mensaje de este con !ban"
-      );
-    }
-    if (splitMessage[1] === "!report") {
-      sendTextMessage(chatId!, "Reporta un problema a el desarrollador");
-    }
-    
-    if (splitMessage[1] === "!num"){
-    sendTextMessage(chatId!, "Convertidor de numeros a diferentes base ej: decimal a binario");
-  }
-
-      if (splitMessage[1] === "!solve"){
-    sendTextMessage(chatId!, "Resuelve operacione matematicas simples");
-  }
-
-  }
+  infoHandler(splitMessage, sendTextMessage, chatId);
 
   randomNumberHandler(m, sock);
   ytDownloadHandler(
@@ -354,3 +281,4 @@ export async function mainHandler(
     banHandler(sock, chatId, senderId, m, messages, sendTextMessage);
   }
 }
+
