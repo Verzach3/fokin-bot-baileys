@@ -313,11 +313,17 @@ export async function mainHandler(
       checkAdmin() ? sendTextMessage(chatId!, "Si") : sendTextMessage(chatId!, "No");
     }
 
+    async function keyCheck(key:string) {
+      try {
+        return (await db.get(`${key}_stick`)).toString()
+      } catch (error) {
+        return "not set";
+      }
+      
+    }
+
   //!stick
-  if (
-    (await db.get(`${chatId}_stick`)).toString() === "false" &&
-    commandCheck("!stick")
-  ) {
+  if (await keyCheck("!stick") === "false" && commandCheck("!stick") ){
     sendTextMessage(chatId!, "Stickers deshabilitados");
   } else {
     stickerHandler(m, messageType, sendStickerMessage, chatId, sendTextMessage);
