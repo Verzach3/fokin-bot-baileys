@@ -255,6 +255,7 @@ export async function mainHandler(
     if (splitMessage[0] === command) return true;
     if (splitExtendedMessage[0] === command) return true;
     if (m.message?.imageMessage?.caption === command) return true;
+    return false
   }
 
   if (splitMessage[0] === "!disablecmd") {
@@ -301,7 +302,7 @@ export async function mainHandler(
 
   //!stick
   if (
-    (await db.get(`${chatId}_stick`)).toString() === "true" &&
+    (await db.get(`${chatId}_stick`)).toString() === "false" &&
     commandCheck("!stick")
   ) {
     sendTextMessage(chatId!, "Stickers deshabilitados");
