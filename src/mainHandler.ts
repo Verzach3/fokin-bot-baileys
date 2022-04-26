@@ -239,7 +239,7 @@ export async function mainHandler(
     imagePath: string
   ) => void
 ) {
-  const debug = true; // Deshabilita los comandos
+  const debug = false; // Deshabilita los comandos
   const m = messages[0];
   if (!m.message) return;
   if (m.key.fromMe) return;
