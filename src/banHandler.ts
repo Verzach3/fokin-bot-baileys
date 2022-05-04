@@ -7,12 +7,16 @@ export async function banHandler(sock: any, chatId: string | null | undefined, s
     (member) => member.id === senderId &&
       (member.admin === "admin" || member.admin === "superadmin")
   );
+    const membertoban = groupMetadata.participants.find(
+    (member) => member.id === (m.message!.extendedTextMessage?.contextInfo?.mentionedJid || m.message!.extendedTextMessage?.contextInfo?.participant) &&
+      (member.admin !== "admin" && member.admin !== "superadmin")
+  );
   console.log(groupMetadata.participants);
   console.log(member);
   if ((m.message!.extendedTextMessage?.contextInfo?.mentionedJid || m.message!.extendedTextMessage?.contextInfo?.participant || nanoid()) !==
     senderId &&
     member!) {
-    if (member.admin === "admin" || member.admin === "superadmin") {
+    if (membertoban!.admin === "admin" || membertoban!.admin === "superadmin") {
       sendTextMessage(chatId!, "La persona que se intenta banear es un administrador!\nTienes Que Hacerlo manualmente");
       return
     }
