@@ -105,6 +105,10 @@ export async function mainHandler(
   }
 
   if (commandCheck("!warn")) {
+    if (!checkAdmin()) {
+      sendTextMessage(chatId!, "No tienes permisos para usar este comando");
+      return;
+    };
     let warns = 0 
     try {
       warns = parseInt((await db.get(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid!+"_warns")).toString()) 
@@ -112,7 +116,6 @@ export async function mainHandler(
     } catch (error) {
       console.log(error)
     }
-    if (!checkAdmin()) return;
     if (warns >= 3) {
       await db.del(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid+"_warns");
       await db.del(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.participant+"_warns");
