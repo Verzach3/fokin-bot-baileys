@@ -100,6 +100,10 @@ export async function mainHandler(
     return false;
   }
 
+  if (commandCheck("!returnDebug")) {
+    sendTextMessage(chatId!, JSON.stringify(m));
+  }
+
   console.log(`${commandCheck("/start") ? "[YESSSSSSSS]" : "[NOOOOOOO]" }`);
 
   console.log(
@@ -166,17 +170,17 @@ export async function mainHandler(
       : sendTextMessage(chatId!, "No");
   }
 
-  async function keyCheck(key: string) {
+  async function keyCheck(key: string, command: string) {
     try {
-      return (await db.get(`${key}_stick`)).toString();
+      return (await db.get(`${key}_${command}`)).toString();
     } catch (error) {
       return "not set";
     }
   }
 
   //!stick
-  console.log("[KEYCHECK - STICK] ", await keyCheck(chatId!));
-  if ((await keyCheck(chatId!)) === "false" && commandCheck("!stick")) {
+  console.log("[KEYCHECK - STICK] ", await keyCheck(chatId!, "stick"));
+  if ((await keyCheck(chatId!, "stick")) === "false" && commandCheck("!stick")) {
     sendTextMessage(chatId!, "Stickers deshabilitados");
   } else {
     console.log("[EXECUTED - STICK] ");

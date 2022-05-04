@@ -13,7 +13,7 @@ export async function banHandler(sock: any, chatId: string | null | undefined, s
     senderId &&
     member!) {
     if (member.admin === "admin" || member.admin === "superadmin") {
-      sendTextMessage(chatId!, "La persona que intenta banear es un administrador!, Hazlo manualmente");
+      sendTextMessage(chatId!, "La persona que intenta banear es un administrador!\n Tienes Que Hacerlo manualmente");
       return
     }
     sock.groupParticipantsUpdate(messages[0].key.remoteJid, [...m.message!.extendedTextMessage?.contextInfo?.participant!], "remove");
