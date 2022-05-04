@@ -15,20 +15,13 @@ export async function banHandler(
       member.id === senderId &&
       (member.admin === "admin" || member.admin === "superadmin")
   );
-  let membertoban = groupMetadata.participants.find(
+  const membertoban = groupMetadata.participants.filter(
     (member) =>
       member.id ===
-        m.message!.extendedTextMessage?.contextInfo?.mentionedJid![0]! &&
-      member.admin === null
+      (m.message!.extendedTextMessage?.contextInfo?.mentionedJid![0]! ||
+        m.message!.extendedTextMessage?.contextInfo?.participant ||
+        nanoid())
   );
-  if (!membertoban) {
-    membertoban = groupMetadata.participants.find(
-      (member) =>
-        member.id ===
-          m.message!.extendedTextMessage?.contextInfo?.participant![0]! &&
-        member.admin === null
-    );
-  }
   if (!membertoban) {
     sendTextMessage(chatId!, "No se encontró al usuario a banear");
     return;
@@ -41,7 +34,7 @@ export async function banHandler(
       nanoid()) !== senderId &&
     member!
   ) {
-    if (membertoban.admin === "admin") {
+    if (membertoban[0].admin === "admin") {
       sendTextMessage(
         chatId!,
         "La persona que se intenta banear es un administrador!\nTienes Que Hacerlo manualmente"
