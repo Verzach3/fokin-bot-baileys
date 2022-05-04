@@ -8,12 +8,12 @@ export async function banHandler(sock: any, chatId: string | null | undefined, s
       (member.admin === "admin" || member.admin === "superadmin")
   );
     const membertoban = groupMetadata.participants.find(
-    (member) => member.id === (m.message!.extendedTextMessage?.contextInfo?.mentionedJid || m.message!.extendedTextMessage?.contextInfo?.participant) &&
+    (member) => member.id === (m.message!.extendedTextMessage?.contextInfo?.mentionedJid![0]! || m.message!.extendedTextMessage?.contextInfo?.participant) &&
       (member.admin !== "admin" && member.admin !== "superadmin")
   );
   console.log(groupMetadata.participants);
   console.log(member);
-  if ((m.message!.extendedTextMessage?.contextInfo?.mentionedJid || m.message!.extendedTextMessage?.contextInfo?.participant || nanoid()) !==
+  if ((m.message!.extendedTextMessage?.contextInfo?.mentionedJid![0]! || m.message!.extendedTextMessage?.contextInfo?.participant || nanoid()) !==
     senderId &&
     member!) {
     if (membertoban) {
