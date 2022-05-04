@@ -16,7 +16,8 @@ export function helpHandler(m: proto.IWebMessageInfo, sendTextMessage: (contactI
       "│  ➤ !report [problema]\n" +
       "│\n" +
       "│【﻿ＧＲＵＰＯＳ】\n" +
-      "│  ➤ !ban [@usuario]\n" +
+      "│  ➤ !ban [@usuario/mencion]\n" +
+      "│  ➤ !warn [@usuario/mencion]\n" +
       "│\n" +
       "│\n" +
       "│\n" +

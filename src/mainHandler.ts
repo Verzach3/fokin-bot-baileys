@@ -108,12 +108,14 @@ export async function mainHandler(
     let warns = 0 
     try {
       warns = parseInt((await db.get(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid!+"_warns")).toString()) 
+      warns = parseInt((await db.get(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.participant!+"_warns")).toString()) 
     } catch (error) {
       console.log(error)
     }
     if (!checkAdmin()) return;
     if (warns >= 3) {
       await db.del(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid+"_warns");
+      await db.del(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.participant+"_warns");
       // sendTextMessage(m.message.extendedTextMessage?.contextInfo?.mentionedJid![0]!, "Ha sido expulsado del grupo");
       sendTextMessage(chatId!, "Mas de 3 warns, expulsado del grupo");
       banHandler(sock, chatId, senderId, m, messages, sendTextMessage);
@@ -121,6 +123,7 @@ export async function mainHandler(
     }
     else{
       await db.put(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid!+"_warns", (warns+1).toString());
+      await db.put(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.participant!+"_warns", (warns+1).toString());
       sendTextMessage(chatId!, `Has sido advertido ${warns + 1}/3 veces`);
   }
   }
