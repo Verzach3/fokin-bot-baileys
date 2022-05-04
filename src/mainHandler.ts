@@ -104,6 +104,21 @@ export async function mainHandler(
     sendTextMessage(chatId!, JSON.stringify(m));
   }
 
+  if (commandCheck("!warn")) {
+    const warns = parseInt((await db.get(m.key.remoteJid!+m.key.participant!+"_warns")).toString())
+    if (!checkAdmin()) return;
+    if (warns >= 3) {
+      await db.del(m.key.remoteJid!+m.key.participant!+"_warns");
+      sendTextMessage(m.pushName!, "Ha sido expulsado del grupo");
+      await sock.groupParticipantsUpdate!(chatId!, [senderId!], "remove");
+      return;
+    }
+    else{
+      await db.put(m.key.remoteJid!+m.key.participant!+"_warns", (warns+1).toString());
+      sendTextMessage(chatId!, `Has sido advertido ${warns + 1}/3 veces`);
+  }
+  }
+
   console.log(`${commandCheck("/start") ? "[YESSSSSSSS]" : "[NOOOOOOO]" }`);
 
   console.log(
