@@ -105,16 +105,16 @@ export async function mainHandler(
   }
 
   if (commandCheck("!warn")) {
-    const warns = parseInt((await db.get(m.key.remoteJid!+m.key.participant!+"_warns")).toString())
+    const warns = parseInt((await db.get(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid!+"_warns")).toString())
     if (!checkAdmin()) return;
     if (warns >= 3) {
-      await db.del(m.key.remoteJid!+m.key.participant!+"_warns");
+      await db.del(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid+"_warns");
       sendTextMessage(m.pushName!, "Ha sido expulsado del grupo");
-      await sock.groupParticipantsUpdate!(chatId!, [senderId!], "remove");
+      await sock.groupParticipantsUpdate!(chatId!, [...m.message.extendedTextMessage!.contextInfo!.mentionedJid!], "remove");
       return;
     }
     else{
-      await db.put(m.key.remoteJid!+m.key.participant!+"_warns", (warns+1).toString());
+      await db.put(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid!+"_warns", (warns+1).toString());
       sendTextMessage(chatId!, `Has sido advertido ${warns + 1}/3 veces`);
   }
   }
