@@ -7,10 +7,17 @@ export async function banHandler(sock: any, chatId: string | null | undefined, s
     (member) => member.id === senderId &&
       (member.admin === "admin" || member.admin === "superadmin")
   );
-    const membertoban = groupMetadata.participants.find(
-    (member) => member.id === (m.message!.extendedTextMessage?.contextInfo?.mentionedJid![0]! || m.message!.extendedTextMessage?.contextInfo?.participant) &&
+  let membertoban = groupMetadata.participants.find(
+    (member) => member.id === m.message!.extendedTextMessage?.contextInfo?.mentionedJid![0]! &&
       (member.admin !== "admin" && member.admin !== "superadmin")
   );
+  if (!membertoban) {
+    membertoban = groupMetadata.participants.find(
+      (member) => member.id === m.message!.extendedTextMessage?.contextInfo?.participant![0]! &&
+        (member.admin !== "admin" && member.admin !== "superadmin")
+    );
+  }
+  if (!member) return;
   console.log(groupMetadata.participants);
   console.log(member);
   if ((m.message!.extendedTextMessage?.contextInfo?.mentionedJid![0]! || m.message!.extendedTextMessage?.contextInfo?.participant || nanoid()) !==
