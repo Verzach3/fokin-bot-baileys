@@ -159,6 +159,11 @@ export async function mainHandler(
       "Solo los administradores pueden habilitar los comandos"
     );
   }
+
+  if (commandCheck("!groupDebug")) {
+    sendTextMessage(chatId!, JSON.stringify(await sock.groupMetadata!(chatId!)));
+  }
+
   if (debug) return;
   // Handler === Manejador, Reciben y responden mensajes
   // Desde aqui comienzan los handlers
