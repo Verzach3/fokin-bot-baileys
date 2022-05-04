@@ -105,7 +105,12 @@ export async function mainHandler(
   }
 
   if (commandCheck("!warn")) {
-    const warns = parseInt((await db.get(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid!+"_warns")).toString())
+    let warns = 0 
+    try {
+      parseInt((await db.get(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid!+"_warns")).toString()) 
+    } catch (error) {
+      console.log(error)
+    }
     if (!checkAdmin()) return;
     if (warns >= 3) {
       await db.del(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid+"_warns");
