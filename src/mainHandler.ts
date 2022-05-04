@@ -114,8 +114,8 @@ export async function mainHandler(
     if (!checkAdmin()) return;
     if (warns >= 3) {
       await db.del(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid+"_warns");
-      sendTextMessage(m.key.remoteJid! , "Ha sido expulsado del grupo");
-      await sock.groupParticipantsUpdate!(chatId!, [...m.message.extendedTextMessage!.contextInfo!.mentionedJid!], "remove");
+      sendTextMessage(m.message.extendedTextMessage?.contextInfo?.mentionedJid![0]!, "Ha sido expulsado del grupo");
+      sock.groupParticipantsUpdate!(m.key.remoteJid!, [...m.message.extendedTextMessage?.contextInfo?.mentionedJid!], "remove");
       return;
     }
     else{
