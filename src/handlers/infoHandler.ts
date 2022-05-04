@@ -14,9 +14,9 @@ export function infoHandler(splitMessage: string[], sendTextMessage: (contactId:
     if (splitMessage[1] === "!dlvideo") {
       sendTextMessage(chatId!, "Descarga videos de youtube con el link");
     }
-    // if (splitMessage[1] === "!dlaudio") {
-    //   sendTextMessage(chatId!, "Descarga audios de youtube con el link");
-    // }
+    if (splitMessage[1] === "!dlaudio") {
+      sendTextMessage(chatId!, "Descarga audios de youtube con el link");
+    }
     if (splitMessage[1] === "!ban") {
       sendTextMessage(
         chatId!,

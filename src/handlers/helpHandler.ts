@@ -11,7 +11,7 @@ export function helpHandler(m: proto.IWebMessageInfo, sendTextMessage: (contactI
       "│  ➤ !dlvideo [link]\n" +
       "│  ➤ !num [fromD/toD] [número] [base]\n" +
       "│  ➤ !solve [operacion]\n" +
-      // "│  ➤ !dlaudio [link]\n" +
+      "│  ➤ !dlaudio [link]\n" +
       "│  ➤ !info [comando]\n" +
       "│  ➤ !report [problema]\n" +
       "│\n" +
