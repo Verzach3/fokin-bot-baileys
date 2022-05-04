@@ -12,6 +12,9 @@ export async function banHandler(sock: any, chatId: string | null | undefined, s
   if ((m.message!.extendedTextMessage?.contextInfo?.mentionedJid || m.message!.extendedTextMessage?.contextInfo?.participant || nanoid()) !==
     senderId &&
     member!) {
+    if (member.admin === "admin" || member.admin === "superadmin") {
+      sendTextMessage(chatId!, "La persona que intenta banear es un administrador!, Hazlo manualmente");
+    }
     sock.groupParticipantsUpdate(messages[0].key.remoteJid, [...m.message!.extendedTextMessage?.contextInfo?.participant!], "remove");
     sock.groupParticipantsUpdate(messages[0].key.remoteJid, [...m.message!.extendedTextMessage?.contextInfo?.mentionedJid!], "remove");
     sendTextMessage(chatId!, "Usuario baneado");
