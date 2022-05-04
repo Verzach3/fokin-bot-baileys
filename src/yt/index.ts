@@ -145,7 +145,7 @@ export async function dlAudio(
         } catch (error) {}
         console.info("[DOWNLOADER]", "Done!");
         console.log(video);
-        convertVideoToMp3(`./media/${filename}.mp4`, `./media/${filename}.mp3`);
+        await convertVideoToMp3(`./media/${filename}.mp4`, `./media/${filename}.mp3`);
         sendAudioMessage(senderId, `./media/${filename}.mp3`);
       });
 
