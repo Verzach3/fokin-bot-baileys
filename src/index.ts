@@ -95,23 +95,28 @@ async function connectToWhatsapp() {
   sock.ev.on("creds.update", saveState);
 
   sock.ev.on("messages.upsert", async ({ messages }) => {
-    console.log("[MESSAGE FROM]", messages[0]); // sender
-    console.log(messages[0]); // message
-    mainHandler(
-      messages,
-      sock as any,
-      db,
-      sendTextMessage,
-      sendVideoMessage,
-      sendAudioMessage,
-      sendImageMessage,
-      sendStickerMessage,
-      sendButtonMessage
-    );
-  });
-
-  sock.ev.on("group-participants.update", (participants) => {
-    if (participants.action === "add") {
+    try {
+      
+      console.log("[MESSAGE FROM]", messages[0]); // sender
+      console.log(messages[0]); // message
+      mainHandler(
+        messages,
+        sock as any,
+        db,
+        sendTextMessage,
+        sendVideoMessage,
+        sendAudioMessage,
+        sendImageMessage,
+        sendStickerMessage,
+        sendButtonMessage
+        );
+      } catch (error) {
+        console.log("[POSIBLY FATAL ERROR]", error);
+      }
+      });
+      
+      sock.ev.on("group-participants.update", (participants) => {
+        if (participants.action === "add") {
       sock.groupMetadata(participants.id).then(console.log);
     }
     console.log("New Group Participants", participants);
