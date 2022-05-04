@@ -107,7 +107,7 @@ export async function mainHandler(
   if (commandCheck("!warn")) {
     let warns = 0 
     try {
-      parseInt((await db.get(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid!+"_warns")).toString()) 
+      warns = parseInt((await db.get(m.key.remoteJid!+m.message.extendedTextMessage!.contextInfo!.mentionedJid!+"_warns")).toString()) 
     } catch (error) {
       console.log(error)
     }
