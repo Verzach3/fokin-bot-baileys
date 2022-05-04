@@ -34,7 +34,7 @@ export async function banHandler(
       nanoid()) !== senderId &&
     member!
   ) {
-    if (membertoban[0].admin === "admin") {
+    if (membertoban[0].admin === "admin" || membertoban[0].admin === "superadmin") {
       sendTextMessage(
         chatId!,
         "La persona que se intenta banear es un administrador!\nTienes Que Hacerlo manualmente"
