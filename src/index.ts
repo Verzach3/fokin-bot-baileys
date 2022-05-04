@@ -12,7 +12,7 @@ import { mainHandler } from "./mainHandler";
 
 const { state, saveState } = useSingleFileAuthState("./auth.json");
 const db = levelup(LevelDOWN("./db"));
-
+let startLog = false;
 mkdir("./media", (err) => console.log(err));
 
 async function connectToWhatsapp() {
@@ -31,13 +31,16 @@ async function connectToWhatsapp() {
     caption?: string
   ) => {
     sock.sendMessage(contactId, {
-      video: {url: videoPath},
+      video: { url: videoPath },
       caption: caption,
     });
   };
 
   const sendAudioMessage = async (contactId: string, audioPath: string) => {
-    sock.sendMessage(contactId, { audio: { url: audioPath }, mimetype: "audio/mp4" });
+    sock.sendMessage(contactId, {
+      audio: { url: audioPath },
+      mimetype: "audio/mp4",
+    });
   };
 
   const sendImageMessage = async (
@@ -88,6 +91,9 @@ async function connectToWhatsapp() {
       }
     } else if (connection === "open") {
       console.log("Connection opened");
+      if (startLog) {
+        sendTextMessage("573135408570@s.whatsapp.net", "Bot Started");
+      }
     }
   });
 
@@ -96,7 +102,6 @@ async function connectToWhatsapp() {
 
   sock.ev.on("messages.upsert", async ({ messages }) => {
     try {
-      
       console.log("[MESSAGE FROM]", messages[0]); // sender
       console.log(messages[0]); // message
       mainHandler(
@@ -109,14 +114,14 @@ async function connectToWhatsapp() {
         sendImageMessage,
         sendStickerMessage,
         sendButtonMessage
-        );
-      } catch (error) {
-        console.log("[POSIBLY FATAL ERROR]", error);
-      }
-      });
-      
-      sock.ev.on("group-participants.update", (participants) => {
-        if (participants.action === "add") {
+      );
+    } catch (error) {
+      console.log("[POSIBLY FATAL ERROR]", error);
+    }
+  });
+
+  sock.ev.on("group-participants.update", (participants) => {
+    if (participants.action === "add") {
       sock.groupMetadata(participants.id).then(console.log);
     }
     console.log("New Group Participants", participants);

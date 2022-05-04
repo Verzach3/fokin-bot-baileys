@@ -29,22 +29,21 @@ export function ytDownloadHandler(
       sendVideoMessage,
     );
     return;
+  } else if (splitMessage![0] === "!dlaudio") {
+    dlAudio(
+      splitMessage![1],
+      sender || "",
+      sendTextMessage,
+      sendAudioMessage,
+    );
+    return;
+  } else if (splitExtendedMessage![0] === "!dlaudio") {
+    dlAudio(
+      splitExtendedMessage![1],
+      sender || "",
+      sendTextMessage,
+      sendAudioMessage
+    );
+    return;
   }
-  // } else if (splitMessage![0] === "!dlaudio") {
-  //   dlAudio(
-  //     splitMessage![1],
-  //     sender || "",
-  //     sendTextMessage,
-  //     sendAudioMessage,
-  //   );
-  //   return;
-  // } else if (splitExtendedMessage![0] === "!dlaudio") {
-  //   dlAudio(
-  //     splitExtendedMessage![1],
-  //     sender || "",
-  //     sendTextMessage,
-  //     sendAudioMessage
-  //   );
-  //   return;
-  // }
 }

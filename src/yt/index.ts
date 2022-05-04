@@ -2,7 +2,7 @@ import { createWriteStream } from "fs";
 import { nanoid } from "nanoid";
 import Innertube from "youtubei.js";
 import ytdl from "ytdl-core";
-import { convertAACToMp3 } from "../lib/convertAACToMP3";
+import { convertVideoToMp3 } from "../lib/convertVideoToMP3";
 
 const IT = require("youtubei.js");
 
@@ -103,10 +103,10 @@ export async function dlAudio(
     } else {
       const stream = youtube.download(videoId, {
         format: "mp4",
-        quality: "144p",
-        type: "audio",
+        quality: "360p",
+        type: "videoandaudio",
       });
-      stream.pipe(createWriteStream(`./media/${filename}.mp3`));
+      stream.pipe(createWriteStream(`./media/${filename}.mp4`));
 
       stream.on("start", () => {
         console.info("[DOWNLOADER]", "Starting download now!");
@@ -145,7 +145,7 @@ export async function dlAudio(
         } catch (error) {}
         console.info("[DOWNLOADER]", "Done!");
         console.log(video);
-        // await convertAACToMp3(`./media/${filename}.mp4`, `./media/${filename}.mp3`);
+        convertVideoToMp3(`./media/${filename}.mp4`, `./media/${filename}.mp3`);
         sendAudioMessage(senderId, `./media/${filename}.mp3`);
       });
 
