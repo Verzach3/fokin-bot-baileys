@@ -16,7 +16,7 @@ export async function banHandler(sock: any, chatId: string | null | undefined, s
   if ((m.message!.extendedTextMessage?.contextInfo?.mentionedJid || m.message!.extendedTextMessage?.contextInfo?.participant || nanoid()) !==
     senderId &&
     member!) {
-    if (membertoban!.admin === "admin" || membertoban!.admin === "superadmin") {
+    if (membertoban) {
       sendTextMessage(chatId!, "La persona que se intenta banear es un administrador!\nTienes Que Hacerlo manualmente");
       return
     }
