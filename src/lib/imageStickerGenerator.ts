@@ -1,16 +1,29 @@
-import {
-  downloadContentFromMessage,
-  proto
-} from "@adiwajshing/baileys";
+import { downloadContentFromMessage, proto } from "@adiwajshing/baileys";
 import { writeFile } from "fs/promises";
 import { nanoid } from "nanoid";
 import sharp from "sharp";
 
-export async function imageStickerGenerator(m: proto.IWebMessageInfo,chatId: string, sendStickerMessage: Function) {
-  const stream = await downloadContentFromMessage(
-    m.message!.imageMessage as any,
-    "image"
-  );
+export async function imageStickerGenerator(
+  m: proto.IWebMessageInfo,
+  chatId: string,
+  sendStickerMessage: Function,
+  mentioned?: boolean
+) {
+  let stream = null;
+  if (mentioned) {
+    stream = await downloadContentFromMessage(
+      m.message!.extendedTextMessage!.contextInfo!.quotedMessage!.imageMessage! as any, "image"
+    );
+  } else {
+    stream = await downloadContentFromMessage(
+      m.message!.imageMessage as any,
+      "image"
+    );
+  }
+  if (!stream) {
+    console.log("[No stream]");
+    return;
+  }
   const filename = nanoid();
   let buffer = Buffer.from([]);
   for await (const chunk of stream) {
@@ -22,5 +35,5 @@ export async function imageStickerGenerator(m: proto.IWebMessageInfo,chatId: str
     .resize({ width: 512, height: 512 })
     .webp({ quality: 100 })
     .toFile(`./media/${filename}.webp`);
-    sendStickerMessage(chatId , `./media/${filename}.webp`)
+  sendStickerMessage(chatId, `./media/${filename}.webp`);
 }
