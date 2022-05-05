@@ -31,7 +31,7 @@ export async function stickerHandler(
     if (m.message?.extendedTextMessage?.text === "!stick"){
       if (m.message.extendedTextMessage.contextInfo?.quotedMessage?.imageMessage){
       console.log("[STICKER - MENTIONED]");
-      await imageStickerGenerator(m, sender!, sendStickerMessage);
+      await imageStickerGenerator(m, sender!, sendStickerMessage, true);
 
     }
   }
