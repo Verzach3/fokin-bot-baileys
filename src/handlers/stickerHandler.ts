@@ -35,4 +35,16 @@ export async function stickerHandler(
 
     }
   }
+    if (m.message!.videoMessage?.caption === "!stick") {
+    if (m.message?.extendedTextMessage?.contextInfo?.quotedMessage?.videoMessage){ 
+      console.log("[STICKER - MENTIONED - ANIMATED]");
+      await videoStickerGenerator(
+        m,
+        sendStickerMessage,
+        sender,
+        sendTextMessage,
+        true
+        );
+      }
+    }
 }
