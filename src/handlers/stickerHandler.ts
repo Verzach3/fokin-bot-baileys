@@ -25,18 +25,21 @@ export async function stickerHandler(
         sendStickerMessage,
         sender,
         sendTextMessage
-        );
-      }
-    }
-    if (m.message?.extendedTextMessage?.text === "!stick"){
-      if (m.message.extendedTextMessage.contextInfo?.quotedMessage?.imageMessage){
-      console.log("[STICKER - MENTIONED]");
-      await imageStickerGenerator(m, sender!, sendStickerMessage, true);
-
+      );
     }
   }
-    if (m.message!.videoMessage?.caption === "!stick") {
-    if (m.message?.extendedTextMessage?.contextInfo?.quotedMessage?.videoMessage){ 
+  if (m.message?.extendedTextMessage?.text === "!stick") {
+    if (
+      m.message.extendedTextMessage.contextInfo?.quotedMessage?.imageMessage
+    ) {
+      console.log("[STICKER - MENTIONED]");
+      await imageStickerGenerator(m, sender!, sendStickerMessage, true);
+    }
+  }
+  if (m.message?.extendedTextMessage?.text === "!stick") {
+    if (
+      m.message?.extendedTextMessage?.contextInfo?.quotedMessage?.videoMessage
+    ) {
       console.log("[STICKER - MENTIONED - ANIMATED]");
       await videoStickerGenerator(
         m,
@@ -44,7 +47,7 @@ export async function stickerHandler(
         sender,
         sendTextMessage,
         true
-        );
-      }
+      );
     }
+  }
 }
