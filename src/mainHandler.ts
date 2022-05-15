@@ -202,6 +202,10 @@ export async function mainHandler(
       : sendTextMessage(chatId!, "No");
   }
 
+  if (commandCheck("!sexo")) {
+    checkAdmin() ? sendTextMessage(chatId!, "Sexo") : sendTextMessage(chatId!, "No");
+  }
+
   async function keyCheck(key: string, command: string) {
     try {
       return (await db.get(`${key}_${command}`)).toString();

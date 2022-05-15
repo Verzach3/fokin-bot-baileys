@@ -24,7 +24,7 @@ export async function dlVideo(
     const video: any = await youtube.getDetails(videoId);
     const videoLength = (await ytdl.getBasicInfo(link)).videoDetails
       .lengthSeconds;
-    if (parseInt(videoLength) > 600) {
+    if (parseInt(videoLength) > 1200) {
       sendTextMessage(senderId, "Video demasiado largo, limite 10min");
       return null;
     } else {
@@ -96,7 +96,7 @@ export async function dlAudio(
     const video: any = await youtube.getDetails(videoId);
     const videoLength = (await ytdl.getBasicInfo(link)).videoDetails
       .lengthSeconds;
-    if (parseInt(videoLength) > 600) {
+    if (parseInt(videoLength) > 1200) {
       sendTextMessage(senderId, "Video demasiado largo, limite 10min");
       console.log("Video demasiado largo");
       return null;
