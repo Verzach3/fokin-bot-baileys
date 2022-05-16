@@ -223,8 +223,8 @@ export async function mainHandler(
   //   stickerHandler(m, messageType, sendStickerMessage, chatId, sendTextMessage);
   // }
 
-  if (splitExtendedMessage[0] === "!ban") {
-    console.log("[BAN]");
-    banHandler(sock, chatId, senderId, m, messages, sendTextMessage);
-  }
+  // if (splitExtendedMessage[0] === "!ban") {
+  //   console.log("[BAN]");
+  //   banHandler(sock, chatId, senderId, m, messages, sendTextMessage);
+  // }
 }
