@@ -171,30 +171,30 @@ export async function mainHandler(
   // Handler === Manejador, Reciben y responden mensajes
   // Desde aqui comienzan los handlers
   booksHandler(splitMessageForBooks, chatId, sock);
-  mathHandler(splitMessage, sendTextMessage, chatId);
+  // mathHandler(splitMessage, sendTextMessage, chatId);
 
-  //Help Screen
-  helpHandler(m, sendTextMessage, chatId);
+  // //Help Screen
+  // helpHandler(m, sendTextMessage, chatId);
 
-  if (splitMessage[0] === "!report") {
-    sendTextMessage(
-      "573135408570@s.whatsapp.net",
-      splitMessage.toString() + `[FROM] ${chatId}`
-    );
-  }
+  // if (splitMessage[0] === "!report") {
+  //   sendTextMessage(
+  //     "573135408570@s.whatsapp.net",
+  //     splitMessage.toString() + `[FROM] ${chatId}`
+  //   );
+  // }
 
-  infoHandler(splitMessage, sendTextMessage, chatId);
+  // infoHandler(splitMessage, sendTextMessage, chatId);
 
-  randomNumberHandler(m, sock);
-  ytDownloadHandler(
-    splitMessage,
-    chatId,
-    sock,
-    splitExtendedMessage,
-    sendTextMessage,
-    sendVideoMessage,
-    sendAudioMessage
-  );
+  // randomNumberHandler(m, sock);
+  // ytDownloadHandler(
+  //   splitMessage,
+  //   chatId,
+  //   sock,
+  //   splitExtendedMessage,
+  //   sendTextMessage,
+  //   sendVideoMessage,
+  //   sendAudioMessage
+  // );
 
   if (commandCheck("!admin?")) {
     checkAdmin()
@@ -214,14 +214,14 @@ export async function mainHandler(
     }
   }
 
-  //!stick
-  console.log("[KEYCHECK - STICK] ", await keyCheck(chatId!, "stick"));
-  if ((await keyCheck(chatId!, "stick")) === "false" && commandCheck("!stick")) {
-    sendTextMessage(chatId!, "Stickers deshabilitados");
-  } else {
-    console.log("[EXECUTED - STICK] ");
-    stickerHandler(m, messageType, sendStickerMessage, chatId, sendTextMessage);
-  }
+  // //!stick
+  // console.log("[KEYCHECK - STICK] ", await keyCheck(chatId!, "stick"));
+  // if ((await keyCheck(chatId!, "stick")) === "false" && commandCheck("!stick")) {
+  //   sendTextMessage(chatId!, "Stickers deshabilitados");
+  // } else {
+  //   console.log("[EXECUTED - STICK] ");
+  //   stickerHandler(m, messageType, sendStickerMessage, chatId, sendTextMessage);
+  // }
 
   if (splitExtendedMessage[0] === "!ban") {
     console.log("[BAN]");
